@@ -6,24 +6,28 @@
 
     /* ── sticky nav ── */
     const nav = document.getElementById("nav");
-    const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    if (nav) {
+        const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 12);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+    }
 
     /* ── mobile menu ── */
     const burger = document.getElementById("navBurger");
     const mobileMenu = document.getElementById("mobileMenu");
-    burger.addEventListener("click", () => {
-        const open = mobileMenu.classList.toggle("is-open");
-        burger.setAttribute("aria-expanded", String(open));
-        burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    });
-    mobileMenu.addEventListener("click", (e) => {
-        if (e.target.closest("a")) {
-            mobileMenu.classList.remove("is-open");
-            burger.setAttribute("aria-expanded", "false");
-        }
-    });
+    if (burger && mobileMenu) {
+        burger.addEventListener("click", () => {
+            const open = mobileMenu.classList.toggle("is-open");
+            burger.setAttribute("aria-expanded", String(open));
+            burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        });
+        mobileMenu.addEventListener("click", (e) => {
+            if (e.target.closest("a")) {
+                mobileMenu.classList.remove("is-open");
+                burger.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
 
     /* ── scroll reveal with stagger ── */
     const reveals = document.querySelectorAll(".reveal");
@@ -165,32 +169,36 @@
         }
     });
 
-    cartBtn.addEventListener("click", () => {
-        if (isSignedIn()) {
-            showToast(items === 0
-                ? "Your basket is empty — add something fresh!"
-                : `${items} item${items === 1 ? "" : "s"} in your basket`);
-        } else {
-            requireSignIn("Please sign in to view your basket");
-        }
-    });
+    if (cartBtn) {
+        cartBtn.addEventListener("click", () => {
+            if (isSignedIn()) {
+                showToast(items === 0
+                    ? "Your basket is empty — add something fresh!"
+                    : `${items} item${items === 1 ? "" : "s"} in your basket`);
+            } else {
+                requireSignIn("Please sign in to view your basket");
+            }
+        });
+    }
 
     /* ── newsletter ── */
     const form = document.getElementById("newsForm");
     const note = document.getElementById("newsNote");
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = form.email.value.trim();
-        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-        note.classList.toggle("is-error", !valid);
-        if (!valid) {
-            note.textContent = "Please enter a valid email address.";
-            form.email.focus();
-            return;
-        }
-        note.textContent = "Welcome aboard! Fresh deals are on their way to your inbox. 🌿";
-        form.reset();
-    });
+    if (form && note) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = form.email.value.trim();
+            const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+            note.classList.toggle("is-error", !valid);
+            if (!valid) {
+                note.textContent = "Please enter a valid email address.";
+                form.email.focus();
+                return;
+            }
+            note.textContent = "Welcome aboard! Fresh deals are on their way to your inbox. 🌿";
+            form.reset();
+        });
+    }
 
     /* ── real photos with graceful SVG fallback ── */
     const wirePhotos = (root = document) => {
