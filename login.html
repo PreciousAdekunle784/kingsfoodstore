@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in — Kings Food Mart</title>
+  <meta name="description" content="Sign in to your Kings Food Mart account to shop wholesale and retail groceries, track orders and manage delivery." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FFFFFF'/><g fill='none' stroke='%23F58230' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'><path d='M24 32 H34 L42 64 H72'/><path d='M34 40 H74 L69 60 H42'/></g><path d='M40 74 Q54 84 72 72' stroke='%2300A858' stroke-width='7' fill='none' stroke-linecap='round'/><circle cx='46' cy='78' r='5' fill='%23F58230'/><circle cx='66' cy='78' r='5' fill='%23F58230'/></svg>" />
+</head>
+<body>
+  <main class="auth">
+
+    <!-- ══ brand panel ══ -->
+    <aside class="auth__aside">
+      <img class="auth__aside-photo" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy" decoding="async" />
+
+      <a href="index.html" class="auth__brand" aria-label="Kings Food Mart — home">
+        <svg viewBox="0 0 44 44" width="40" height="40" aria-hidden="true"><g fill="none" stroke="#F58230" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14 H15 L19 29 H33"/><path d="M15 18 H34 L31.5 27 H19"/></g><path d="M18 33 Q25 38 34 32" stroke="#00A858" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="21" cy="35" r="2.4" fill="#F58230"/><circle cx="30" cy="35" r="2.4" fill="#F58230"/></svg>
+        <span class="auth__brand-text">Kings Food Mart<em>Wholesales &amp; Retail</em></span>
+      </a>
+
+      <div class="auth__pitch">
+        <h2>Welcome back to your pantry.</h2>
+        <p>Sign in to reorder your staples in a tap, track same-day delivery and unlock member pricing on bulk buys.</p>
+      </div>
+
+      <ul class="auth__perks" aria-label="Member benefits">
+        <li class="auth__perk">
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg></span>
+          Same-day delivery, city-wide
+        </li>
+        <li class="auth__perk">
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/><path d="M9 12l2 2 8-8"/></svg></span>
+          Wholesale &amp; retail in one basket
+        </li>
+        <li class="auth__perk">
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.9H22l-5.8 4.3 2.2 6.8L12 16.7 5.6 20l2.2-6.8L2 8.9h7.6z"/></svg></span>
+          Member-only prices on bulk buys
+        </li>
+      </ul>
+    </aside>
+
+    <!-- ══ form panel ══ -->
+    <section class="auth__main">
+      <div class="auth__form-wrap">
+        <a href="index.html" class="auth__back">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Back to store
+        </a>
+
+        <header class="auth__head">
+          <p class="auth__eyebrow">Member sign in</p>
+          <h1 class="auth__title">Sign in to your account</h1>
+          <p class="auth__subtitle">New to Kings Food Mart? <a href="signup.html" style="color:var(--forest);font-weight:700">Create an account</a>.</p>
+        </header>
+
+        <div class="auth__success" role="status" aria-live="polite">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <span class="auth__success-text"></span>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label class="field__label" for="loginEmail">Email address</label>
+            <div class="field__input-wrap">
+              <span class="field__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <input type="email" id="loginEmail" name="loginEmail" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="loginPassword">Password</label>
+            <div class="field__input-wrap">
+              <span class="field__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+              <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter your password" autocomplete="current-password" required />
+              <button type="button" class="field__toggle" data-toggle-pw="loginPassword" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="auth__row">
+            <label class="checkbox"><input type="checkbox" name="remember" /> Keep me signed in</label>
+            <a href="#" class="auth__forgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn--primary auth__submit" data-magnetic>Sign in</button>
+        </form>
+
+        <div class="auth__divider">or continue with</div>
+        <div class="social-row">
+          <button type="button" class="social-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.9a5 5 0 0 1-2.2 3.3v2.7h3.5c2-1.9 3.3-4.7 3.3-7.9z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.5-2.7c-1 .7-2.3 1.1-3.8 1.1-2.9 0-5.3-1.9-6.2-4.6H2.2v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.2a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.7l3.1-3.1A11 11 0 0 0 2.2 7.1l3.6 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>
+            Google
+          </button>
+          <button type="button" class="social-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7v-3.5h3.1V9.4c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.2h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg>
+            Facebook
+          </button>
+        </div>
+
+        <p class="auth__swap">Don't have an account? <a href="signup.html">Create one now</a></p>
+
+        <p class="auth__note">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Secured with encrypted sign-in
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="auth.js" defer></script>
+</body>
+</html>
