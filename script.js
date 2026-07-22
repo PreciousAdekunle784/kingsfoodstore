@@ -131,7 +131,7 @@
     /* Shopping requires an account. Until the shopper is signed in,
        any add-to-cart or basket action routes them to the sign-in page.
        (Swap isSignedIn for a real auth check once a backend is wired up.) */
-    const isSignedIn = () => false;
+    const isSignedIn = () => !!(window.KFM && window.KFM.getUser());
     const goToSignIn = () => { window.location.href = "login.html"; };
 
     const requireSignIn = (msg, name) => {

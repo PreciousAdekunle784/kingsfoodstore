@@ -93,15 +93,14 @@
         </form>
 
         <div class="auth__divider">or continue with</div>
-        <div class="social-row">
-          <button type="button" class="social-btn">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.9a5 5 0 0 1-2.2 3.3v2.7h3.5c2-1.9 3.3-4.7 3.3-7.9z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.5-2.7c-1 .7-2.3 1.1-3.8 1.1-2.9 0-5.3-1.9-6.2-4.6H2.2v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.2a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.7l3.1-3.1A11 11 0 0 0 2.2 7.1l3.6 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>
-            Google
-          </button>
-          <button type="button" class="social-btn">
+        <div class="social-stack">
+          <div id="googleBtn" aria-label="Sign in with Google"></div>
+          <p class="google-hint" id="googleHint" hidden></p>
+          <button type="button" id="facebookBtn" class="social-btn social-btn--full">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7v-3.5h3.1V9.4c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.2h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg>
-            Facebook
+            Continue with Facebook
           </button>
+          <p class="google-hint" id="facebookHint" hidden></p>
         </div>
 
         <p class="auth__swap">Don't have an account? <a href="signup.html">Create one now</a></p>
@@ -114,6 +113,10 @@
     </section>
   </main>
 
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="session.js" defer></script>
+  <script src="google-auth.js" defer></script>
+  <script src="facebook-auth.js" defer></script>
   <script src="auth.js" defer></script>
 </body>
 </html>
