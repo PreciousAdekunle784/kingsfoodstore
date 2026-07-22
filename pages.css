@@ -642,3 +642,53 @@
 .pay-opt span { display: flex; flex-direction: column; gap: 2px; }
 .pay-opt strong { font-size: .93rem; color: var(--ink); font-weight: 600; }
 .pay-opt small { font-size: .78rem; color: var(--ink-soft); }
+
+/* delivery map picker */
+.co-map { height: 220px; border-radius: var(--radius-sm); overflow: hidden; margin-top: 10px; border: 1px solid rgba(26,26,26,.10); }
+.co-map__hint { font-size: .78rem; color: var(--ink-soft); margin-top: 6px; }
+/* keep Google's autocomplete dropdown above the map */
+.pac-container { z-index: 3000; border-radius: 12px; margin-top: 4px; box-shadow: var(--shadow-lift); font-family: var(--font-body); }
+
+/* ══════════════════════════════════════════════════════════════
+   MY ORDERS PAGE
+   ══════════════════════════════════════════════════════════════ */
+.orders-section { padding: 40px 0 90px; background: var(--cream); }
+.orders-list { display: flex; flex-direction: column; gap: 18px; max-width: 820px; }
+.order-card {
+    background: #fff; border: 1px solid rgba(26,26,26,.07);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+.order-card__head {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 18px 22px; border-bottom: 1px solid rgba(26,26,26,.06);
+    background: var(--cream-deep);
+}
+.order-card__ref { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+.order-card__date { font-size: .84rem; color: var(--ink-soft); }
+.order-card__spacer { flex: 1; }
+.order-status {
+    font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px;
+}
+.order-status--pending   { background: rgba(245,130,48,.14);  color: #B45309; }
+.order-status--paid      { background: rgba(0,168,88,.14);    color: var(--forest-deep); }
+.order-status--delivered { background: rgba(46,125,50,.16);   color: #1B5E20; }
+.order-status--cancelled { background: rgba(192,57,43,.12);   color: #B23030; }
+.order-card__body { padding: 18px 22px; }
+.order-lines { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.order-line { display: flex; justify-content: space-between; font-size: .9rem; color: var(--ink-soft); }
+.order-line span:first-child { color: var(--ink); }
+.order-card__foot {
+    display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px;
+    border-top: 1px dashed rgba(26,26,26,.12); padding-top: 14px;
+}
+.order-card__addr { font-size: .82rem; color: var(--ink-soft); max-width: 60%; line-height: 1.5; }
+.order-card__addr a { color: var(--forest); font-weight: 600; text-decoration: none; }
+.order-card__total { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--ink); }
+.order-card__pay { font-size: .76rem; color: var(--ink-soft); font-weight: 600; }
+
+/* "My orders" nav link — only visible when signed in */
+.nav__orders, .page-nav__orders { display: none; }
+body[data-auth="in"] .nav__orders,
+body[data-auth="in"] .page-nav__orders { display: inline-flex; }

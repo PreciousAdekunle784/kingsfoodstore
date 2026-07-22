@@ -38,6 +38,68 @@
         return { subtotal, delivery, total: subtotal + delivery };
     };
 
+    /* ── Google Maps address picker (optional; needs maps-config.js) ── */
+    let mapsPromise = null;
+    const loadMaps = () => {
+        if (window.google && window.google.maps) return Promise.resolve();
+        if (mapsPromise) return mapsPromise;
+        mapsPromise = new Promise((resolve, reject) => {
+            window.__kfmMapsReady = () => resolve();
+            const s = document.createElement("script");
+            s.src = "https://maps.googleapis.com/maps/api/js?key=" +
+                encodeURIComponent(window.GOOGLE_MAPS_API_KEY) +
+                "&libraries=places&loading=async&callback=__kfmMapsReady";
+            s.async = true; s.defer = true;
+            s.onerror = () => reject(new Error("maps failed to load"));
+            document.head.appendChild(s);
+        });
+        return mapsPromise;
+    };
+
+    const setLatLng = (pos) => {
+        const la = document.getElementById("coLat"), ln = document.getElementById("coLng");
+        if (la && ln) { la.value = typeof pos.lat === "function" ? pos.lat() : pos.lat; ln.value = typeof pos.lng === "function" ? pos.lng() : pos.lng; }
+    };
+
+    const initMap = () => {
+        const mapEl = document.getElementById("coMap");
+        const input = document.getElementById("coAddress");
+        if (!mapEl || !input || !window.google || !window.google.maps) return;
+        const LAGOS = { lat: 6.5244, lng: 3.3792 };
+        const map = new google.maps.Map(mapEl, {
+            center: LAGOS, zoom: 12, mapTypeControl: false,
+            streetViewControl: false, fullscreenControl: false
+        });
+        const marker = new google.maps.Marker({ map, position: LAGOS, draggable: true });
+        const geocoder = new google.maps.Geocoder();
+        const reverse = (pos) => geocoder.geocode({ location: pos }, (res, status) => {
+            if (status === "OK" && res && res[0]) input.value = res[0].formatted_address;
+        });
+
+        try {
+            const ac = new google.maps.places.Autocomplete(input, {
+                fields: ["formatted_address", "geometry"],
+                componentRestrictions: { country: "ng" }
+            });
+            ac.addListener("place_changed", () => {
+                const p = ac.getPlace();
+                if (!p.geometry) return;
+                const loc = p.geometry.location;
+                map.setCenter(loc); map.setZoom(16); marker.setPosition(loc);
+                setLatLng(loc);
+                if (p.formatted_address) input.value = p.formatted_address;
+            });
+        } catch (e) { /* Places not enabled — map + drag still work */ }
+
+        marker.addListener("dragend", () => { setLatLng(marker.getPosition()); reverse(marker.getPosition()); });
+        map.addListener("click", (e) => { marker.setPosition(e.latLng); setLatLng(e.latLng); reverse(e.latLng); });
+    };
+
+    function maybeInitMap() {
+        if (!window.MAPS_READY) return;
+        loadMaps().then(initMap).catch(() => {/* leave the plain address box */});
+    }
+
     const render = () => {
         if (!user) {
             root.innerHTML = stateCard("Please sign in to check out",
@@ -87,8 +149,10 @@
                     </div>
                     <div class="pfield">
                         <label class="pfield__label" for="coAddress">Delivery address</label>
-                        <textarea id="coAddress" name="coAddress" placeholder="House number, street, area, city…" autocomplete="street-address" required></textarea>
+                        <input type="text" id="coAddress" name="coAddress" placeholder="${payReady || window.MAPS_READY ? "Start typing your address…" : "House number, street, area, city…"}" autocomplete="off" required />
                         <p class="pfield__error" role="alert"></p>
+                        ${window.MAPS_READY ? `<div id="coMap" class="co-map"></div><p class="co-map__hint">Search above, or drag the pin / tap the map to set your exact spot.</p>` : ""}
+                        <input type="hidden" id="coLat" /><input type="hidden" id="coLng" />
                     </div>
                     <div class="pfield">
                         <label class="pfield__label" for="coNote">Delivery note <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></label>
@@ -111,6 +175,7 @@
                 <a href="cart.html" class="cart-summary__continue">← Edit basket</a>
             </aside>
         </div>`;
+        maybeInitMap();
     };
 
     const selectedMethod = () => {
@@ -135,11 +200,14 @@
 
     /* create the order + its line items; returns the new order id */
     const createOrder = async (d, method, status, ref, total) => {
-        const { data: order, error: oErr } = await window.sb.from("orders").insert({
+        const payload = {
             user_id: user.id, status, total,
             full_name: d.name, phone: d.phone, address: d.address, note: d.note,
             payment_method: method, payment_ref: ref
-        }).select("id").single();
+        };
+        if (d.lat != null && d.lng != null) { payload.lat = d.lat; payload.lng = d.lng; }
+        const { data: order, error: oErr } = await window.sb.from("orders")
+            .insert(payload).select("id").single();
         if (oErr) throw oErr;
         const lineItems = rows.map((r) => ({
             order_id: order.id,
@@ -170,8 +238,8 @@
             <span class="co-success__ref">${esc(String(ref))}</span>
             <p style="margin-bottom:22px">Total: <strong>${naira(total)}</strong>${method === "paystack" ? " · Paid online" : " · Pay on delivery"}</p>
             <div class="co-success__actions">
-                <a href="index.html" class="btn btn--primary" data-magnetic>Continue shopping</a>
-                <a href="index.html#best-sellers" class="btn btn--ghost">Browse more</a>
+                <a href="orders.html" class="btn btn--primary" data-magnetic>View my orders</a>
+                <a href="index.html" class="btn btn--ghost">Continue shopping</a>
             </div>
         </div>`;
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -220,7 +288,10 @@
         if (address.length < 8) { showError("coAddress", "Please enter a full delivery address."); ok = false; }
         if (!ok) return;
 
-        const d = { name, phone, address, note };
+        const latEl = document.getElementById("coLat"), lngEl = document.getElementById("coLng");
+        const lat = latEl && latEl.value ? Number(latEl.value) : null;
+        const lng = lngEl && lngEl.value ? Number(lngEl.value) : null;
+        const d = { name, phone, address, note, lat, lng };
         const method = selectedMethod();
         const t = totals();
         const btn = document.getElementById("placeOrderBtn");
