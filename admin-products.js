@@ -10,9 +10,9 @@
     if (!root) return;
 
     const ADMIN_EMAIL = "kingsfoodstoreabuja@gmail.com";
-    const CATEGORIES = ["Rice & Grains", "Beans & Legumes", "Garri & Cassava", "Cooking Oils",
-        "Flour & Baking", "Fresh Vegetables", "Fresh Fruits", "Spices & Seasonings",
-        "Frozen Foods", "Beverages", "Snacks", "Household Essentials"];
+    const CATEGORIES = ["Rice & Grains", "Pasta & Noodles", "Beans & Legumes", "Cooking Oils",
+        "Flour & Baking", "Tinned & Packaged", "Milk & Cereals", "Seasonings & Spices",
+        "Beverages & Drinks", "Snacks & Biscuits", "Household & Cleaning", "Provisions & Staples"];
     const SVGS = ["s-sack", "s-jar", "s-bottle", "s-flour", "s-tomato", "s-pepper", "s-crayfish", "s-fish", "s-leaf", "s-fruit"];
 
     let toastTimer = null;
@@ -133,7 +133,7 @@
         if (!window.SB_READY || !window.sb) { root.innerHTML = notice("Database not connected", "Add your Supabase keys in supabase-client.js."); return; }
         let user = null;
         try { const { data } = await window.sb.auth.getSession(); user = data && data.session && data.session.user; } catch (e) {}
-        if (!user) { root.innerHTML = notice("Please sign in", 'Sign in with your admin account. <a href="login.html">Sign in</a>'); return; }
+        if (!user) { root.innerHTML = notice("Please sign in", 'Sign in with your admin account. <a href="/login">Sign in</a>'); return; }
         let isAdmin = (user.email || "").toLowerCase() === ADMIN_EMAIL;
         if (!isAdmin) { const { data: prof } = await window.sb.from("profiles").select("is_admin").eq("id", user.id).maybeSingle(); isAdmin = !!(prof && prof.is_admin); }
         if (!isAdmin) { root.innerHTML = notice("Access denied", "This page is for store admins only."); return; }

@@ -275,23 +275,23 @@
         // pool is larger than what's shown, so the shelf keeps refreshing
         const pool = [
             { n: "Premium Long-Grain Rice", w: "10&nbsp;kg bag", p: "₦18,500", r: "4.9", s: "in", badge: "Best Seller", tint: "#F0EAD8", svg: "s-sack", ss: "--grain:#D4A017", img: ph("photo-1586201375761-83865001e31c") },
-            { n: "Honey Brown Beans", w: "5&nbsp;kg", p: "₦9,200", r: "4.8", s: "in", tint: "#EFE4D6", svg: "s-jar", ss: "--fill:#7B4A2D;--lid:#A3B18A", img: ph("photo-1515543237350-b3eea1ec8082") },
-            { n: "Ijebu Garri (Extra Sour)", w: "5&nbsp;kg", p: "₦6,800", r: "4.9", s: "in", badge: "Popular", tint: "#F3ECD9", svg: "s-sack", ss: "--grain:#E8C558", img: ph("photo-1612257999756-9dae14cff8f2") },
-            { n: "Pure Red Palm Oil", w: "4&nbsp;litres", p: "₦7,500", r: "4.7", s: "in", tint: "#F5E8D2", svg: "s-bottle", ss: "--oil:#C0392B;--cap:#2E7D32", img: ph("photo-1474979266404-7eaacbcd87c5") },
-            { n: "Golden Vegetable Oil", w: "5&nbsp;litres", p: "₦11,000", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#DBA512;--cap:#C96A3D", img: ph("photo-1608797178974-15b35a64ede9") },
-            { n: "Yam Flour (Elubo)", w: "2&nbsp;kg", p: "₦4,300", r: "4.6", s: "in", tint: "#F2EDE2", svg: "s-flour", ss: "--label:#2E7D32", img: ph("photo-1509440159596-0249088772ff") },
-            { n: "Semovita", w: "5&nbsp;kg", p: "₦8,900", r: "4.7", s: "in", tint: "#EFE9DA", svg: "s-flour", ss: "--label:#D4A017", img: ph("photo-1568254183919-78a4f43a2877") },
-            { n: "Fresh Plum Tomatoes", w: "Basket · 3&nbsp;kg", p: "₦5,200", r: "4.9", s: "in", badge: "Farm Fresh", fresh: true, tint: "#F5E2DC", svg: "s-tomato", ss: "", img: ph("photo-1546094096-0df4bcaaa337") },
-            { n: "Pepper Mix (Rodo &amp; Tatashe)", w: "2&nbsp;kg pack", p: "₦3,800", r: "4.8", s: "in", tint: "#F7E7D4", svg: "s-pepper", ss: "", img: ph("photo-1583119022894-919a68a3d0e3") },
-            { n: "Dried Crayfish", w: "500&nbsp;g", p: "₦6,500", r: "4.9", s: "low", tint: "#F4E4D2", svg: "s-crayfish", ss: "", img: ph("photo-1565680018434-b513d5e5fd47") },
-            { n: "Smoked Dried Fish", w: "Pack of 4", p: "₦7,200", r: "4.7", s: "in", tint: "#EFE5D3", svg: "s-fish", ss: "", img: ph("photo-1519708227418-c8fd9a32b7a2") },
-            { n: "Local Spice Blend", w: "Trio of jars · 350&nbsp;g", p: "₦4,900", r: "5.0", s: "in", badge: "Aromatic", tint: "#F4E3D3", svg: "s-jar", ss: "--fill:#C96A3D;--lid:#8A5F3B", img: ph("photo-1596040033229-a9821ebd058d") },
-            { n: "Ofada Rice (Local)", w: "5&nbsp;kg", p: "₦12,400", r: "4.8", s: "in", badge: "Local Favourite", tint: "#F0EAD8", svg: "s-sack", ss: "--grain:#C7A24A", img: ph("photo-1586201375761-83865001e31c") },
-            { n: "White Beans (Oloyin)", w: "5&nbsp;kg", p: "₦8,600", r: "4.7", s: "in", tint: "#EFE4D6", svg: "s-jar", ss: "--fill:#E6D9BC;--lid:#A3B18A", img: ph("photo-1515543237350-b3eea1ec8082") },
-            { n: "Pure Groundnut Oil", w: "5&nbsp;litres", p: "₦13,500", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#E0B23C;--cap:#2E7D32", img: ph("photo-1608797178974-15b35a64ede9") },
-            { n: "Plantain Flour", w: "2&nbsp;kg", p: "₦4,900", r: "4.6", s: "in", tint: "#F2EDE2", svg: "s-flour", ss: "--label:#C96A3D", img: ph("photo-1509440159596-0249088772ff") },
-            { n: "Dried Pepper Blend", w: "1&nbsp;kg", p: "₦5,400", r: "4.9", s: "low", badge: "Hot", fresh: true, tint: "#F7E7D4", svg: "s-pepper", ss: "", img: ph("photo-1583119022894-919a68a3d0e3") },
-            { n: "Premium Stockfish", w: "500&nbsp;g", p: "₦9,800", r: "4.8", s: "in", tint: "#EFE5D3", svg: "s-fish", ss: "", img: ph("photo-1519708227418-c8fd9a32b7a2") }
+            { n: "Golden Penny Spaghetti", w: "500&nbsp;g", p: "₦850", r: "4.8", s: "in", badge: "Popular", tint: "#F3E7CE", svg: "s-sack", ss: "--grain:#E8C558", img: ph("photo-1621996346565-e3dbc646d9a9") },
+            { n: "Indomie Instant Noodles", w: "Carton of 40", p: "₦8,200", r: "4.9", s: "in", badge: "Best Seller", tint: "#F5E0C8", svg: "s-sack", ss: "--grain:#D98A2B", img: ph("photo-1612929633738-8fe44f7ec841") },
+            { n: "Macaroni Pasta", w: "500&nbsp;g", p: "₦900", r: "4.6", s: "in", tint: "#F3E7CE", svg: "s-sack", ss: "--grain:#E8C558", img: ph("photo-1551462147-ff29053bfc14") },
+            { n: "Honey Brown Beans", w: "5&nbsp;kg", p: "₦9,200", r: "4.7", s: "in", tint: "#EFE4D6", svg: "s-jar", ss: "--fill:#7B4A2D;--lid:#A3B18A", img: ph("photo-1515543237350-b3eea1ec8082") },
+            { n: "Devon King's Vegetable Oil", w: "5&nbsp;litres", p: "₦11,000", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#DBA512;--cap:#C96A3D", img: ph("photo-1608797178974-15b35a64ede9") },
+            { n: "Pure Groundnut Oil", w: "5&nbsp;litres", p: "₦13,500", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#E0B23C;--cap:#2E7D32", img: ph("photo-1474979266404-7eaacbcd87c5") },
+            { n: "Golden Penny Semovita", w: "5&nbsp;kg", p: "₦8,900", r: "4.7", s: "in", tint: "#EFE9DA", svg: "s-flour", ss: "--label:#D4A017", img: ph("photo-1568254183919-78a4f43a2877") },
+            { n: "Golden Penny Flour", w: "2&nbsp;kg", p: "₦3,200", r: "4.6", s: "in", tint: "#F2EDE2", svg: "s-flour", ss: "--label:#2E7D32", img: ph("photo-1509440159596-0249088772ff") },
+            { n: "Gino Tomato Paste", w: "Sachet × 20", p: "₦3,600", r: "4.8", s: "in", badge: "Kitchen Staple", tint: "#F5E2DC", svg: "s-jar", ss: "--fill:#C0392B;--lid:#8A5F3B", img: ph("photo-1546094096-0df4bcaaa337") },
+            { n: "Titus Sardines", w: "Pack of 3", p: "₦2,700", r: "4.7", s: "low", tint: "#EFE5D3", svg: "s-fish", ss: "", img: ph("photo-1519708227418-c8fd9a32b7a2") },
+            { n: "Peak Powdered Milk", w: "400&nbsp;g tin", p: "₦4,200", r: "4.9", s: "in", badge: "Best Seller", tint: "#EAF0F4", svg: "s-jar", ss: "--fill:#EDE7DA;--lid:#2E5AAC", img: ph("photo-1550583724-b2692b85b150") },
+            { n: "Nestlé Golden Morn", w: "500&nbsp;g", p: "₦2,600", r: "4.7", s: "in", tint: "#F1E4C9", svg: "s-jar", ss: "--fill:#D9A441;--lid:#7B4A2D", img: ph("photo-1517686469429-8bdb88b9f907") },
+            { n: "Kellogg's Cornflakes", w: "500&nbsp;g", p: "₦3,500", r: "4.6", s: "in", tint: "#F5E3C2", svg: "s-jar", ss: "--fill:#E6B23C;--lid:#C0392B", img: ph("photo-1521483451396-84702a8a3d78") },
+            { n: "Maggi Star Seasoning", w: "100 cubes", p: "₦1,500", r: "5.0", s: "in", badge: "Kitchen Staple", tint: "#F4E3D3", svg: "s-jar", ss: "--fill:#C0392B;--lid:#F1C40F", img: ph("photo-1596040033229-a9821ebd058d") },
+            { n: "Milo Chocolate Drink", w: "500&nbsp;g tin", p: "₦3,800", r: "4.9", s: "in", badge: "Popular", tint: "#E7D8C4", svg: "s-jar", ss: "--fill:#5B3A1E;--lid:#2E7D32", img: ph("photo-1541167760496-1628856ab772") },
+            { n: "Cadbury Bournvita", w: "500&nbsp;g", p: "₦3,400", r: "4.7", s: "in", tint: "#E7D8C4", svg: "s-jar", ss: "--fill:#5B3A1E;--lid:#C0392B", img: ph("photo-1541167760496-1628856ab772") },
+            { n: "Dangote Sugar", w: "1&nbsp;kg", p: "₦1,600", r: "4.7", s: "in", tint: "#F3EEE6", svg: "s-jar", ss: "--fill:#FFFFFF;--lid:#2E5AAC", img: ph("photo-1581441363689-1f3c3c414635") }
         ];
 
         const SHOWN = 8;              // cards visible at once

@@ -14,9 +14,9 @@
     if (!grid) return;
 
     const CATEGORIES = [
-        "Rice & Grains", "Beans & Legumes", "Garri & Cassava", "Cooking Oils",
-        "Flour & Baking", "Fresh Vegetables", "Fresh Fruits", "Spices & Seasonings",
-        "Frozen Foods", "Beverages", "Snacks", "Household Essentials"
+        "Rice & Grains", "Pasta & Noodles", "Beans & Legumes", "Cooking Oils",
+        "Flour & Baking", "Tinned & Packaged", "Milk & Cereals", "Seasonings & Spices",
+        "Beverages & Drinks", "Snacks & Biscuits", "Household & Cleaning", "Provisions & Staples"
     ];
 
     let toastTimer = null;
@@ -39,9 +39,9 @@
         titleEl.textContent = category;
         subEl.textContent = "Browse our " + category.toLowerCase() + ".";
     }
-    filters.innerHTML = [`<a class="chip ${!category ? "is-active" : ""}" href="shop.html">All</a>`]
+    filters.innerHTML = [`<a class="chip ${!category ? "is-active" : ""}" href="/shop">All</a>`]
         .concat(CATEGORIES.map((c) =>
-            `<a class="chip ${category === c ? "is-active" : ""}" href="shop.html?category=${encodeURIComponent(c)}">${esc(c)}</a>`
+            `<a class="chip ${category === c ? "is-active" : ""}" href="/shop?category=${encodeURIComponent(c)}">${esc(c)}</a>`
         )).join("");
 
     const star = `<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg>`;
@@ -83,7 +83,7 @@
         <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <h2>Nothing here yet</h2>
         <p>We're still stocking this category. Check back soon or browse everything.</p>
-        <a href="shop.html" class="btn btn--primary" data-magnetic>View all products</a>
+        <a href="/shop" class="btn btn--primary" data-magnetic>View all products</a>
     </div>`;
 
     const renderProducts = (list) => {
@@ -99,7 +99,7 @@
     };
 
     const addToCart = async (productId, name) => {
-        if (!user) { showToast("Please sign in to add items"); setTimeout(() => location.href = "login.html", 800); return; }
+        if (!user) { showToast("Please sign in to add items"); setTimeout(() => location.href = "/login", 800); return; }
         const { data: ex } = await window.sb.from("cart_items")
             .select("id,qty").eq("user_id", user.id).eq("product_id", productId).maybeSingle();
         if (ex) await window.sb.from("cart_items").update({ qty: ex.qty + 1 }).eq("id", ex.id);
@@ -118,7 +118,7 @@
     });
 
     if (cartBtn) cartBtn.addEventListener("click", () => {
-        location.href = user ? "cart.html" : "login.html";
+        location.href = user ? "/cart" : "/login";
     });
 
     /* ── boot ── */

@@ -11,6 +11,13 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="auth.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FFFFFF'/><g fill='none' stroke='%23F58230' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'><path d='M24 32 H34 L42 64 H72'/><path d='M34 40 H74 L69 60 H42'/></g><path d='M40 74 Q54 84 72 72' stroke='%2300A858' stroke-width='7' fill='none' stroke-linecap='round'/><circle cx='46' cy='78' r='5' fill='%23F58230'/><circle cx='66' cy='78' r='5' fill='%23F58230'/></svg>" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#00A858" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Kings Food" />
+  <meta name="mobile-web-app-capable" content="yes" />
 </head>
 <body>
   <main class="auth">
@@ -19,7 +26,7 @@
     <aside class="auth__aside">
       <img class="auth__aside-photo" src="https://images.unsplash.com/photo-1543168256-418811576931?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy" decoding="async" />
 
-      <a href="index.html" class="auth__brand" aria-label="Kings Food Mart — home">
+      <a href="/" class="auth__brand" aria-label="Kings Food Mart — home">
         <svg viewBox="0 0 44 44" width="40" height="40" aria-hidden="true"><g fill="none" stroke="#F58230" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14 H15 L19 29 H33"/><path d="M15 18 H34 L31.5 27 H19"/></g><path d="M18 33 Q25 38 34 32" stroke="#00A858" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="21" cy="35" r="2.4" fill="#F58230"/><circle cx="30" cy="35" r="2.4" fill="#F58230"/></svg>
         <span class="auth__brand-text">Kings Food Mart<em>Wholesales &amp; Retail</em></span>
       </a>
@@ -32,7 +39,7 @@
       <ul class="auth__perks" aria-label="Why join">
         <li class="auth__perk">
           <span aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3 13.5 3 9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 4.5-4 8-9 12z"/></svg></span>
-          Farm-fresh quality, quality-checked daily
+          Genuine brands, quality-checked daily
         </li>
         <li class="auth__perk">
           <span aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg></span>
@@ -48,7 +55,7 @@
     <!-- ══ form panel ══ -->
     <section class="auth__main">
       <div class="auth__form-wrap">
-        <a href="index.html" class="auth__back">
+        <a href="/" class="auth__back">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           Back to store
         </a>
@@ -119,7 +126,7 @@
 
           <label class="checkbox" style="margin-bottom:22px">
             <input type="checkbox" name="terms" />
-            <span>I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></span>
+            <span>I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></span>
           </label>
 
           <button type="submit" class="btn btn--primary auth__submit" data-magnetic>Create account</button>
@@ -131,7 +138,7 @@
           <p class="google-hint" id="googleHint" hidden></p>
         </div>
 
-        <p class="auth__swap">Already have an account? <a href="login.html">Sign in</a></p>
+        <p class="auth__swap">Already have an account? <a href="/login">Sign in</a></p>
       </div>
     </section>
   </main>
@@ -142,5 +149,13 @@
   <script src="session.js" defer></script>
   <script src="google-auth.js" defer></script>
   <script src="auth.js" defer></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/sw.js").catch(function () {});
+      });
+    }
+  </script>
+  <script src="/pwa-install.js" defer></script>
 </body>
 </html>
