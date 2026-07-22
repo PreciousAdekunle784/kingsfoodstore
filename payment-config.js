@@ -9,7 +9,7 @@
    Your SECRET key (sk_…) must NEVER be in any website file; it lives
    only in the Supabase Edge Function (see verify-payment/index.ts). */
 
-const PAYSTACK_PUBLIC_KEY = "pk_test_PASTE_YOUR_PAYSTACK_PUBLIC_KEY";
+const PAYSTACK_PUBLIC_KEY = "pk_live_86332c190507c82d135d897432ea4cb285cbdc79";
 
 window.PAYSTACK_READY = /^pk_(test|live)_[A-Za-z0-9]+/.test(PAYSTACK_PUBLIC_KEY)
     && !PAYSTACK_PUBLIC_KEY.includes("PASTE_YOUR");
