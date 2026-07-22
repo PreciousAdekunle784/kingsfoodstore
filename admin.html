@@ -11,21 +11,29 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="pages.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FFFFFF'/><g fill='none' stroke='%23F58230' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'><path d='M24 32 H34 L42 64 H72'/><path d='M34 40 H74 L69 60 H42'/></g><path d='M40 74 Q54 84 72 72' stroke='%2300A858' stroke-width='7' fill='none' stroke-linecap='round'/><circle cx='46' cy='78' r='5' fill='%23F58230'/><circle cx='66' cy='78' r='5' fill='%23F58230'/></svg>" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#00A858" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Kings Food" />
+  <meta name="mobile-web-app-capable" content="yes" />
 </head>
 <body>
   <div class="page">
     <header class="page-nav">
       <div class="page-nav__inner container">
-        <a href="index.html" class="page-nav__logo" aria-label="Kings Food Mart — home">
+        <a href="/" class="page-nav__logo" aria-label="Kings Food Mart — home">
           <svg viewBox="0 0 44 44" width="40" height="40" aria-hidden="true"><g fill="none" stroke="#F58230" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14 H15 L19 29 H33"/><path d="M15 18 H34 L31.5 27 H19"/></g><path d="M18 33 Q25 38 34 32" stroke="#00A858" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="21" cy="35" r="2.4" fill="#F58230"/><circle cx="30" cy="35" r="2.4" fill="#F58230"/></svg>
           <span class="page-nav__logo-text">Kings <em>Food Mart</em> · Admin</span>
         </a>
         <span class="page-nav__spacer"></span>
         <nav class="page-nav__actions" aria-label="Page">
-          <a href="admin.html" class="page-nav__link" style="color:var(--forest-deep);font-weight:700">Orders</a>
-          <a href="admin-products.html" class="page-nav__link">Products</a>
+          <a href="/admin" class="page-nav__link" style="color:var(--forest-deep);font-weight:700">Orders</a>
+          <a href="/admin-products" class="page-nav__link">Products</a>
+          <a href="/admin-subscribers" class="page-nav__link">Subscribers</a>
           <button class="page-nav__link" id="refreshBtn" type="button">Refresh</button>
-          <a href="index.html" class="page-nav__back">Store</a>
+          <a href="/" class="page-nav__back">Store</a>
         </nav>
       </div>
     </header>
@@ -52,8 +60,8 @@
         <span>© <span id="year">2026</span> Kings Food Mart · RC 8980702</span>
         <span class="page-foot__spacer"></span>
         <nav class="page-foot__links" aria-label="Legal">
-          <a href="index.html">Home</a>
-          <a href="orders.html">My orders</a>
+          <a href="/">Home</a>
+          <a href="/orders">My orders</a>
         </nav>
       </div>
     </footer>
@@ -65,5 +73,12 @@
   <script src="supabase-client.js" defer></script>
   <script src="session.js" defer></script>
   <script src="admin.js" defer></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/sw.js").catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>
