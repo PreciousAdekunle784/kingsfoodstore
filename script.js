@@ -132,7 +132,7 @@
        any add-to-cart or basket action routes them to the sign-in page.
        (Swap isSignedIn for a real auth check once a backend is wired up.) */
     const isSignedIn = () => !!(window.KFM && window.KFM.getUser());
-    const goToSignIn = () => { window.location.href = "login.html"; };
+    const goToSignIn = () => { window.location.href = "/login"; };
 
     const requireSignIn = (msg, name) => {
         showToast(msg);
@@ -206,7 +206,7 @@
     if (cartBtn) {
         cartBtn.addEventListener("click", () => {
             if (isSignedIn()) {
-                window.location.href = "cart.html";
+                window.location.href = "/cart";
             } else {
                 requireSignIn("Please sign in to view your basket");
             }
@@ -217,7 +217,7 @@
     const form = document.getElementById("newsForm");
     const note = document.getElementById("newsNote");
     if (form && note) {
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
             const email = form.email.value.trim();
             const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
@@ -227,7 +227,22 @@
                 form.email.focus();
                 return;
             }
-            note.textContent = "Welcome aboard! Fresh deals are on their way to your inbox. 🌿";
+            // save the subscriber to the database
+            if (window.SB_READY && window.sb) {
+                const { error } = await window.sb.from("subscribers")
+                    .insert({ email: email.toLowerCase() });
+                if (error && !/duplicate|unique/i.test(error.message)) {
+                    note.classList.add("is-error");
+                    note.textContent = "Hmm, that didn't save. Please try again.";
+                    return;
+                }
+                // duplicate = already subscribed, which is fine
+                note.textContent = /duplicate|unique/i.test(error ? error.message : "")
+                    ? "You're already on the list — thanks! 🌿"
+                    : "Welcome aboard! Fresh deals are on their way to your inbox. 🌿";
+            } else {
+                note.textContent = "Welcome aboard! Fresh deals are on their way to your inbox. 🌿";
+            }
             form.reset();
         });
     }
