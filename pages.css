@@ -692,3 +692,28 @@
 .nav__orders, .page-nav__orders { display: none; }
 body[data-auth="in"] .nav__orders,
 body[data-auth="in"] .page-nav__orders { display: inline-flex; }
+
+/* ══════════════════════════════════════════════════════════════
+   SHOP / ALL PRODUCTS PAGE
+   ══════════════════════════════════════════════════════════════ */
+.shop-section { padding: 30px 0 90px; background: var(--cream); }
+.shop-filters {
+    display: flex; flex-wrap: wrap; gap: 9px;
+    margin-bottom: 30px;
+}
+.chip {
+    display: inline-flex; align-items: center;
+    padding: 8px 16px; border-radius: 999px;
+    font-size: .86rem; font-weight: 600; text-decoration: none;
+    color: var(--ink-soft); background: #fff;
+    border: 1.5px solid rgba(26,26,26,.10);
+    transition: border-color .2s, background .2s, color .2s, transform .2s;
+}
+.chip:hover { border-color: rgba(0,168,88,.4); color: var(--forest-deep); transform: translateY(-1px); }
+.chip.is-active { background: var(--brand-green); border-color: var(--brand-green); color: #fff; }
+
+/* the shop grid reuses .prod-card; keep a comfortable multi-column layout */
+.shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+@media (max-width: 1024px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px)  { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px)  { .shop-grid { grid-template-columns: 1fr; } }
