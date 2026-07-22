@@ -144,7 +144,7 @@
 
     root.addEventListener("click", (e) => {
         if (e.target.closest("#checkoutBtn")) {
-            showToast("Checkout is coming next — your basket is saved.");
+            window.location.href = "checkout.html";
         }
     });
 
