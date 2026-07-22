@@ -48,8 +48,16 @@
 
     const cardHTML = (p) => {
         const stockLow = p.stock === "low";
-        const badge = p.badge
-            ? `<span class="prod-card__badge${p.badge_fresh ? " prod-card__badge--fresh" : ""}">${esc(p.badge)}</span>` : "";
+        const onSale = p.sale_price != null && Number(p.sale_price) < Number(p.price);
+        const eff = onSale ? Number(p.sale_price) : Number(p.price);
+        let badge = "";
+        if (p.preorder) badge = `<span class="prod-card__badge prod-card__badge--preorder">Pre-order</span>`;
+        else if (onSale) badge = `<span class="prod-card__badge prod-card__badge--sale">Sale</span>`;
+        else if (p.badge) badge = `<span class="prod-card__badge${p.badge_fresh ? " prod-card__badge--fresh" : ""}">${esc(p.badge)}</span>`;
+        const priceHTML = onSale
+            ? `<span class="prod-card__price--was">${naira(p.price)}</span>${naira(eff)}`
+            : naira(eff);
+        const btnLabel = p.preorder ? "Pre-order" : "Quick Add";
         const img = p.image_url
             ? `<img class="photo prod-card__photo is-loaded" src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">` : "";
         return `<li class="prod-card" style="--tint:${esc(p.tint || "#F0EAD8")}">
@@ -62,9 +70,9 @@
                 <h3 class="prod-card__name">${esc(p.name)}</h3>
                 <p class="prod-card__weight">${esc(p.weight || "")}</p>
                 <div class="prod-card__row">
-                    <p class="prod-card__price">${naira(p.price)}</p>
-                    <button class="quick-add" data-name="${esc(p.name)}" data-product-id="${esc(p.id)}" aria-label="Quick add ${esc(p.name)} to basket">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Quick Add</span>
+                    <p class="prod-card__price">${priceHTML}</p>
+                    <button class="quick-add" data-name="${esc(p.name)}" data-product-id="${esc(p.id)}" aria-label="${btnLabel} ${esc(p.name)}">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>${btnLabel}</span>
                     </button>
                 </div>
             </div>

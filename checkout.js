@@ -44,6 +44,7 @@
         toastTimer = setTimeout(() => toast.classList.remove("is-visible"), 2600);
     };
     const naira = (v) => "₦" + Number(v || 0).toLocaleString("en-NG");
+    const eff = (p) => (p && p.sale_price != null && Number(p.sale_price) < Number(p.price)) ? Number(p.sale_price) : Number(p && p.price || 0);
     const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) =>
         ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -54,7 +55,7 @@
         `<div class="cart-state">${BASKET_ICON}<h2>${title}</h2><p>${body}</p>${cta || ""}</div>`;
 
     const totals = () => {
-        const subtotal = rows.reduce((s, r) => s + Number(r.product ? r.product.price : 0) * r.qty, 0);
+        const subtotal = rows.reduce((s, r) => s + eff(r.product) * r.qty, 0);
         const delivery = subtotal >= FREE_DELIVERY_OVER ? 0 : DELIVERY_FEE;
         return { subtotal, delivery, total: subtotal + delivery };
     };
@@ -83,9 +84,9 @@
                 <div class="co-item__media" style="--tint:${esc(p.tint || "#F0EAD8")}">${img}</div>
                 <div class="co-item__info">
                     <div class="co-item__name">${esc(p.name)}</div>
-                    <div class="co-item__qty">${r.qty} × ${naira(p.price)}</div>
+                    <div class="co-item__qty">${r.qty} × ${naira(eff(p))}</div>
                 </div>
-                <div class="co-item__line">${naira(Number(p.price) * r.qty)}</div>
+                <div class="co-item__line">${naira(eff(p) * r.qty)}</div>
             </div>`;
         }).join("");
 
@@ -177,7 +178,7 @@
             order_id: order.id,
             product_id: r.product ? r.product.id : null,
             name: r.product ? r.product.name : "Item",
-            unit_price: r.product ? r.product.price : 0,
+            unit_price: eff(r.product),
             qty: r.qty
         }));
         const { error: iErr } = await window.sb.from("order_items").insert(lineItems);
@@ -291,7 +292,7 @@
         if (!user) { render(); return; }
         // cart
         const { data, error } = await window.sb.from("cart_items")
-            .select("id, qty, product:products(id,name,weight,price,image_url,tint,svg)")
+            .select("id, qty, product:products(id,name,weight,price,sale_price,image_url,tint,svg)")
             .eq("user_id", user.id).order("created_at", { ascending: true });
         rows = error ? [] : (data || []);
         // profile (for prefill) — ignore errors

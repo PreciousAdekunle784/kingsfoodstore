@@ -19,6 +19,7 @@
     };
 
     const naira = (v) => "₦" + Number(v || 0).toLocaleString("en-NG");
+    const eff = (p) => (p && p.sale_price != null && Number(p.sale_price) < Number(p.price)) ? Number(p.sale_price) : Number(p && p.price || 0);
     const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) =>
         ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -37,7 +38,7 @@
 
     const rowHTML = (r) => {
         const p = r.product || {};
-        const line = Number(p.price || 0) * r.qty;
+        const line = eff(p) * r.qty;
         const img = p.image_url
             ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'" />`
             : "";
@@ -46,7 +47,7 @@
             <div class="cart-row__info">
                 <div class="cart-row__name">${esc(p.name || "Item")}</div>
                 <div class="cart-row__meta">${esc(p.weight || "")}</div>
-                <div class="cart-row__unit">${naira(p.price)} each</div>
+                <div class="cart-row__unit">${(p.sale_price!=null && Number(p.sale_price)<Number(p.price)) ? `<span class="prod-card__price--was">${naira(p.price)}</span> ` : ""}${naira(eff(p))} each</div>
             </div>
             <div class="cart-row__right">
                 <div class="qty">
@@ -78,7 +79,7 @@
                 `<a href="index.html#best-sellers" class="btn btn--primary" data-magnetic>Browse products</a>`);
             return;
         }
-        const subtotal = rows.reduce((s, r) => s + Number(r.product ? r.product.price : 0) * r.qty, 0);
+        const subtotal = rows.reduce((s, r) => s + eff(r.product) * r.qty, 0);
         const count = rows.reduce((s, r) => s + r.qty, 0);
         root.innerHTML = `<div class="cart-wrap">
             <div class="cart-list">${rows.map(rowHTML).join("")}</div>
@@ -99,7 +100,7 @@
         if (!user) { render(); return; }
         const { data, error } = await window.sb
             .from("cart_items")
-            .select("id, qty, product:products(id,name,weight,price,image_url,tint,svg,stock)")
+            .select("id, qty, product:products(id,name,weight,price,sale_price,image_url,tint,svg,stock)")
             .eq("user_id", user.id)
             .order("created_at", { ascending: true });
         if (error) { showToast("Couldn't load your basket."); rows = []; }

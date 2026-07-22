@@ -726,3 +726,35 @@ body[data-auth="in"] .page-nav__orders { display: inline-flex; }
 .admin-status { font-size: .8rem; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
 .admin-status__select { padding: 7px 10px; border-radius: 10px; border: 1.5px solid rgba(26,26,26,.14); background: #fff; font-family: var(--font-body); font-size: .85rem; font-weight: 600; color: var(--ink); cursor: pointer; }
 .shop-filters .chip { cursor: pointer; border: 1.5px solid rgba(26,26,26,.10); font-family: var(--font-body); }
+
+/* ── admin: product management ── */
+.padmin__h { font-family: var(--font-display); font-size: 1.1rem; color: var(--ink); margin: 26px 0 12px; }
+.padmin__list { display: flex; flex-direction: column; gap: 14px; }
+.padmin {
+    display: grid; grid-template-columns: 84px 1fr; gap: 16px;
+    background: #fff; border: 1px solid rgba(26,26,26,.08);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-soft); padding: 16px;
+}
+#newProduct .padmin { border-color: rgba(0,168,88,.35); background: rgba(0,168,88,.03); }
+.padmin__media { width: 84px; height: 84px; border-radius: 10px; overflow: hidden; background: var(--tint,#F0EAD8); }
+.padmin__media img { width: 100%; height: 100%; object-fit: cover; }
+.padmin__fields { min-width: 0; }
+.padmin__row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.padmin__fields label { flex: 1; min-width: 130px; display: flex; flex-direction: column; gap: 4px; font-size: .74rem; font-weight: 600; color: var(--ink-soft); }
+.padmin__fields input, .padmin__fields select {
+    padding: 8px 10px; border: 1.5px solid rgba(26,26,26,.14); border-radius: 8px;
+    font-family: var(--font-body); font-size: .86rem; color: var(--ink); background: #fff;
+}
+.padmin__fields input:focus, .padmin__fields select:focus { outline: none; border-color: var(--brand-green); }
+.padmin__toggles { display: flex; flex-wrap: wrap; gap: 16px; margin: 4px 0 12px; }
+.padmin__check { flex-direction: row !important; align-items: center; gap: 7px; font-size: .84rem !important; color: var(--ink) !important; cursor: pointer; }
+.padmin__check input { width: 16px; height: 16px; accent-color: var(--brand-green); }
+.padmin__actions { display: flex; align-items: center; gap: 14px; }
+.padmin__del { background: none; border: 0; color: #C0392B; font-weight: 600; font-size: .84rem; cursor: pointer; }
+.padmin__del:hover { text-decoration: underline; }
+@media (max-width: 560px) { .padmin { grid-template-columns: 1fr; } .padmin__media { width: 100%; height: 120px; } }
+
+/* sale price on product cards */
+.prod-card__price--was { text-decoration: line-through; color: var(--ink-soft); font-weight: 500; font-size: .82em; margin-right: 6px; opacity: .75; }
+.prod-card__badge--sale { background: rgba(192,57,43,.92); }
+.prod-card__badge--preorder { background: rgba(0,168,88,.92); }

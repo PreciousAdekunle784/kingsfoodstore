@@ -287,9 +287,14 @@
         let timer = null;
 
         const cardHTML = (d) => {
-            const badge = d.badge
-                ? `<span class="prod-card__badge${d.fresh ? " prod-card__badge--fresh" : ""}">${d.badge}</span>`
-                : "";
+            const onSale = d.sale != null && Number(d.sale) < Number(d.p);
+            const eff = onSale ? Number(d.sale) : Number(d.p);
+            let badge = "";
+            if (d.preorder) badge = `<span class="prod-card__badge prod-card__badge--preorder">Pre-order</span>`;
+            else if (onSale) badge = `<span class="prod-card__badge prod-card__badge--sale">Sale</span>`;
+            else if (d.badge) badge = `<span class="prod-card__badge${d.fresh ? " prod-card__badge--fresh" : ""}">${d.badge}</span>`;
+            const priceHTML = onSale ? `<span class="prod-card__price--was">${naira(d.p)}</span>${naira(eff)}` : naira(eff);
+            const btnLabel = d.preorder ? "Pre-order" : "Quick Add";
             const stockCls = d.s === "low" ? "prod-card__stock--low" : "prod-card__stock--in";
             const stockTxt = d.s === "low" ? "Low stock" : "In stock";
             const style = d.ss ? ` style="${d.ss}"` : "";
@@ -299,8 +304,8 @@
                     <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated ${d.r} out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>${d.r}</span><span class="prod-card__stock ${stockCls}">${stockTxt}</span></div>
                     <h3 class="prod-card__name">${d.n}</h3>
                     <p class="prod-card__weight">${d.w}</p>
-                    <div class="prod-card__row"><p class="prod-card__price">${naira(d.p)}</p>
-                        <button class="quick-add" data-name="${d.n.replace(/&amp;/g, "and").replace(/<[^>]*>/g, "")}" data-product-id="${d.id || ""}" aria-label="Quick add ${d.n.replace(/&amp;/g, "and")} to basket"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Quick Add</span></button>
+                    <div class="prod-card__row"><p class="prod-card__price">${priceHTML}</p>
+                        <button class="quick-add" data-name="${d.n.replace(/&amp;/g, "and").replace(/<[^>]*>/g, "")}" data-product-id="${d.id || ""}" aria-label="${btnLabel} ${d.n.replace(/&amp;/g, "and")}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>${btnLabel}</span></button>
                     </div>
                 </div>
             </li>`;
@@ -348,6 +353,8 @@
                     n: row.name,
                     w: row.weight || "",
                     p: Number(row.price),
+                    sale: row.sale_price != null ? Number(row.sale_price) : null,
+                    preorder: !!row.preorder,
                     r: String(row.rating),
                     s: row.stock || "in",
                     badge: row.badge || undefined,
