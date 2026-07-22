@@ -206,9 +206,7 @@
     if (cartBtn) {
         cartBtn.addEventListener("click", () => {
             if (isSignedIn()) {
-                showToast(items === 0
-                    ? "Your basket is empty — add something fresh!"
-                    : `${items} item${items === 1 ? "" : "s"} in your basket`);
+                window.location.href = "cart.html";
             } else {
                 requireSignIn("Please sign in to view your basket");
             }
