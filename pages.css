@@ -758,3 +758,19 @@ body[data-auth="in"] .page-nav__orders { display: inline-flex; }
 .prod-card__price--was { text-decoration: line-through; color: var(--ink-soft); font-weight: 500; font-size: .82em; margin-right: 6px; opacity: .75; }
 .prod-card__badge--sale { background: rgba(192,57,43,.92); }
 .prod-card__badge--preorder { background: rgba(0,168,88,.92); }
+
+/* admin subscribers list */
+.subs-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.subs-count { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+.subs-actions { display: flex; gap: 10px; }
+.subs-table-wrap { background: #fff; border: 1px solid rgba(26,26,26,.08); border-radius: var(--radius-md); box-shadow: var(--shadow-soft); overflow: hidden; }
+.subs-table { width: 100%; border-collapse: collapse; }
+.subs-table th, .subs-table td { text-align: left; padding: 12px 16px; font-size: .9rem; border-bottom: 1px solid rgba(26,26,26,.06); }
+.subs-table th { background: var(--cream-deep); font-family: var(--font-display); font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.subs-table td:first-child { color: var(--ink-soft); width: 44px; }
+.subs-table tr:last-child td { border-bottom: 0; }
+.subs-table tbody tr:hover { background: rgba(0,168,88,.03); }
+
+/* admin: product photo upload field */
+.padmin__file { font-size: .8rem; padding: 6px 4px !important; border: 1.5px dashed rgba(0,168,88,.4) !important; background: rgba(0,168,88,.04) !important; cursor: pointer; border-radius: 8px; }
+.padmin__file::file-selector-button { font-family: var(--font-body); font-weight: 600; font-size: .78rem; border: 0; background: var(--brand-green); color: #fff; padding: 5px 10px; border-radius: 6px; margin-right: 8px; cursor: pointer; }

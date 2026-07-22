@@ -44,7 +44,10 @@
                     <label>Sale price (₦)<input name="sale_price" type="number" min="0" step="1" value="${p.sale_price != null ? p.sale_price : ""}" placeholder="empty = no sale"></label>
                 </div>
                 <div class="padmin__row">
-                    <label>Image URL<input name="image_url" value="${esc(p.image_url || "")}" placeholder="https://…"></label>
+                    <label>Product photo
+                        <input type="file" name="photo" accept="image/*" class="padmin__file">
+                    </label>
+                    <label>…or paste an image URL<input name="image_url" value="${esc(p.image_url || "")}" placeholder="https://…"></label>
                     <label>Badge<input name="badge" value="${esc(p.badge || "")}" placeholder="e.g. Best Seller"></label>
                 </div>
                 <div class="padmin__row">
@@ -93,6 +96,36 @@
             slug: slugify(name)
         };
     };
+
+    // upload a chosen photo to Supabase Storage, then fill in its URL
+    root.addEventListener("change", async (e) => {
+        const input = e.target.closest(".padmin__file");
+        if (!input || !input.files || !input.files[0]) return;
+        const file = input.files[0];
+        if (file.size > 5 * 1024 * 1024) { showToast("Image too large — please use one under 5MB."); input.value = ""; return; }
+        const form = input.closest(".padmin");
+        const label = input.closest("label");
+        const original = label ? label.childNodes[0].nodeValue : "";
+        if (label) label.childNodes[0].nodeValue = "Uploading… ";
+        try {
+            const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+            const path = "prod-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7) + "." + ext;
+            const { error } = await window.sb.storage.from("product-images").upload(path, file, { cacheControl: "3600", upsert: false });
+            if (error) { showToast("Upload failed: " + error.message); return; }
+            const { data: pub } = window.sb.storage.from("product-images").getPublicUrl(path);
+            const urlField = form.elements["image_url"];
+            if (urlField) urlField.value = pub.publicUrl;
+            // update the little preview thumbnail
+            const media = form.querySelector(".padmin__media");
+            if (media) media.innerHTML = `<img src="${pub.publicUrl}" alt="" onerror="this.style.display='none'">`;
+            showToast("Photo uploaded — remember to Save.");
+        } catch (err) {
+            showToast("Upload failed. Please try again.");
+        } finally {
+            if (label) label.childNodes[0].nodeValue = original;
+            input.value = "";
+        }
+    });
 
     root.addEventListener("submit", async (e) => {
         e.preventDefault();
