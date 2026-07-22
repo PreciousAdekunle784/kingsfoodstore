@@ -8,6 +8,27 @@
     const DELIVERY_FEE = 1500;          // flat delivery fee, in Naira
     const FREE_DELIVERY_OVER = 50000;   // free delivery at/above this subtotal
 
+    /* ── pickup / delivery locations (edit this list to your real areas) ──
+       Just add or remove names. The customer picks the one closest to them. */
+    const PICKUP_LOCATIONS = [
+        "Apo Resettlement (Main Store)",
+        "Apo Legislative Quarters",
+        "Gudu",
+        "Lokogoma",
+        "Galadimawa",
+        "Games Village",
+        "Gwarinpa",
+        "Kubwa",
+        "Lugbe",
+        "Wuse 2",
+        "Garki",
+        "Utako",
+        "Jabi",
+        "Maitama",
+        "Asokoro",
+        "Central Area"
+    ];
+
     const root = document.getElementById("checkoutRoot");
     const toast = document.getElementById("toast");
     const y = document.getElementById("year");
@@ -37,68 +58,6 @@
         const delivery = subtotal >= FREE_DELIVERY_OVER ? 0 : DELIVERY_FEE;
         return { subtotal, delivery, total: subtotal + delivery };
     };
-
-    /* ── Google Maps address picker (optional; needs maps-config.js) ── */
-    let mapsPromise = null;
-    const loadMaps = () => {
-        if (window.google && window.google.maps) return Promise.resolve();
-        if (mapsPromise) return mapsPromise;
-        mapsPromise = new Promise((resolve, reject) => {
-            window.__kfmMapsReady = () => resolve();
-            const s = document.createElement("script");
-            s.src = "https://maps.googleapis.com/maps/api/js?key=" +
-                encodeURIComponent(window.GOOGLE_MAPS_API_KEY) +
-                "&libraries=places&loading=async&callback=__kfmMapsReady";
-            s.async = true; s.defer = true;
-            s.onerror = () => reject(new Error("maps failed to load"));
-            document.head.appendChild(s);
-        });
-        return mapsPromise;
-    };
-
-    const setLatLng = (pos) => {
-        const la = document.getElementById("coLat"), ln = document.getElementById("coLng");
-        if (la && ln) { la.value = typeof pos.lat === "function" ? pos.lat() : pos.lat; ln.value = typeof pos.lng === "function" ? pos.lng() : pos.lng; }
-    };
-
-    const initMap = () => {
-        const mapEl = document.getElementById("coMap");
-        const input = document.getElementById("coAddress");
-        if (!mapEl || !input || !window.google || !window.google.maps) return;
-        const DEFAULT_CENTER = { lat: 9.0765, lng: 7.3986 };   // Abuja
-        const map = new google.maps.Map(mapEl, {
-            center: DEFAULT_CENTER, zoom: 11, mapTypeControl: false,
-            streetViewControl: false, fullscreenControl: false
-        });
-        const marker = new google.maps.Marker({ map, position: DEFAULT_CENTER, draggable: true });
-        const geocoder = new google.maps.Geocoder();
-        const reverse = (pos) => geocoder.geocode({ location: pos }, (res, status) => {
-            if (status === "OK" && res && res[0]) input.value = res[0].formatted_address;
-        });
-
-        try {
-            const ac = new google.maps.places.Autocomplete(input, {
-                fields: ["formatted_address", "geometry"],
-                componentRestrictions: { country: "ng" }
-            });
-            ac.addListener("place_changed", () => {
-                const p = ac.getPlace();
-                if (!p.geometry) return;
-                const loc = p.geometry.location;
-                map.setCenter(loc); map.setZoom(16); marker.setPosition(loc);
-                setLatLng(loc);
-                if (p.formatted_address) input.value = p.formatted_address;
-            });
-        } catch (e) { /* Places not enabled — map + drag still work */ }
-
-        marker.addListener("dragend", () => { setLatLng(marker.getPosition()); reverse(marker.getPosition()); });
-        map.addListener("click", (e) => { marker.setPosition(e.latLng); setLatLng(e.latLng); reverse(e.latLng); });
-    };
-
-    function maybeInitMap() {
-        if (!window.MAPS_READY) return;
-        loadMaps().then(initMap).catch(() => {/* leave the plain address box */});
-    }
 
     const render = () => {
         if (!user) {
@@ -148,11 +107,17 @@
                         </div>
                     </div>
                     <div class="pfield">
-                        <label class="pfield__label" for="coAddress">Delivery address</label>
-                        <input type="text" id="coAddress" name="coAddress" placeholder="${payReady || window.MAPS_READY ? "Start typing your address…" : "House number, street, area, city…"}" autocomplete="off" required />
+                        <label class="pfield__label" for="coArea">Pickup / delivery location</label>
+                        <select id="coArea" name="coArea" required>
+                            <option value="" disabled selected>Select the location closest to you…</option>
+                            ${PICKUP_LOCATIONS.map((l) => `<option value="${esc(l)}">${esc(l)}</option>`).join("")}
+                        </select>
                         <p class="pfield__error" role="alert"></p>
-                        ${window.MAPS_READY ? `<div id="coMap" class="co-map"></div><p class="co-map__hint">Search above, or drag the pin / tap the map to set your exact spot.</p>` : ""}
-                        <input type="hidden" id="coLat" /><input type="hidden" id="coLng" />
+                    </div>
+                    <div class="pfield">
+                        <label class="pfield__label" for="coLandmark">Nearest landmark or street <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></label>
+                        <input type="text" id="coLandmark" name="coLandmark" placeholder="e.g. beside GTBank, off Road 4" autocomplete="off" />
+                        <p class="pfield__error" role="alert"></p>
                     </div>
                     <div class="pfield">
                         <label class="pfield__label" for="coNote">Delivery note <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></label>
@@ -175,7 +140,6 @@
                 <a href="cart.html" class="cart-summary__continue">← Edit basket</a>
             </aside>
         </div>`;
-        maybeInitMap();
     };
 
     const selectedMethod = () => {
@@ -262,7 +226,7 @@
                     // verify server-side (marks the order paid). If the function
                     // isn't deployed yet, payment is still captured and the order
                     // is saved as pending for you to confirm.
-                    try { await window.sb.functions.invoke("verify-payment", { body: { reference: txn.reference, order_id: orderId } }); } catch (e) {}
+                    try { await window.sb.functions.invoke("verify-payment", { body: { reference: txn.reference, order_id: orderId } }); } catch (e) { }
                     await window.sb.from("cart_items").delete().eq("user_id", user.id);
                     showSuccess(d.name, d.phone, orderId, txn.reference, t.total, "paystack");
                 } catch (e) {
@@ -278,20 +242,19 @@
         if (busy) return;
         const name = document.getElementById("coName").value.trim();
         const phone = document.getElementById("coPhone").value.trim();
-        const address = document.getElementById("coAddress").value.trim();
+        const area = document.getElementById("coArea").value;
+        const landmark = document.getElementById("coLandmark").value.trim();
         const note = document.getElementById("coNote").value.trim();
 
         let ok = true;
-        showError("coName", ""); showError("coPhone", ""); showError("coAddress", "");
+        showError("coName", ""); showError("coPhone", ""); showError("coArea", "");
         if (name.length < 2) { showError("coName", "Please enter your name."); ok = false; }
         if (!/^[0-9+()\s-]{7,}$/.test(phone)) { showError("coPhone", "Enter a valid phone number."); ok = false; }
-        if (address.length < 8) { showError("coAddress", "Please enter a full delivery address."); ok = false; }
+        if (!area) { showError("coArea", "Please choose the location closest to you."); ok = false; }
         if (!ok) return;
 
-        const latEl = document.getElementById("coLat"), lngEl = document.getElementById("coLng");
-        const lat = latEl && latEl.value ? Number(latEl.value) : null;
-        const lng = lngEl && lngEl.value ? Number(lngEl.value) : null;
-        const d = { name, phone, address, note, lat, lng };
+        const address = area + (landmark ? " — " + landmark : "");
+        const d = { name, phone, address, note };
         const method = selectedMethod();
         const t = totals();
         const btn = document.getElementById("placeOrderBtn");
