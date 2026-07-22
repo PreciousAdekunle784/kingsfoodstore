@@ -28,19 +28,31 @@ const GOOGLE_CLIENT_ID = "979545143190-bumo0ammqiin1p94n2g55d9ucjem977b.apps.goo
     }
 
     // called by Google with the signed-in user's ID token
-    const onCredential = (response) => {
+    const onCredential = async (response) => {
+        // Preferred path: hand Google's ID token to Supabase, which verifies it
+        // and creates/returns a real account. Requires your Google Client ID to
+        // be listed in Supabase → Authentication → Providers → Google.
+        if (window.SB_READY && window.sb) {
+            const { error } = await window.sb.auth.signInWithIdToken({
+                provider: "google",
+                token: response.credential
+            });
+            if (error) {
+                showHint("Google sign-in couldn't be completed: " + error.message);
+                return;
+            }
+            window.location.href = "index.html";
+            return;
+        }
+        // Fallback (Supabase not configured yet): local-only sign-in.
         const info = window.KFM ? window.KFM.decodeJwt(response.credential) : null;
         if (!info) { showHint("Something went wrong reading your Google account. Please try again."); return; }
-        const user = {
+        if (window.KFM) window.KFM.setUser({
             name: info.name || info.given_name || "Friend",
             email: info.email || "",
             picture: info.picture || "",
-            sub: info.sub || "",
-            via: "google",
-            ts: Date.now()
-        };
-        if (window.KFM) window.KFM.setUser(user);
-        // land back in the store, now signed in
+            id: info.sub || ""
+        });
         window.location.href = "index.html";
     };
 

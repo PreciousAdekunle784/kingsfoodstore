@@ -82,7 +82,11 @@
             if (!emailRe.test(email)) { setError("loginEmail", "Enter a valid email address."); ok = false; }
             if (pass.length < 1) { setError("loginPassword", "Enter your password."); ok = false; }
             if (!ok) return;
-            submitFlow(loginForm, "Signing you in…", "Welcome back! Redirecting to your account…");
+            submitFlow(loginForm, "Signing you in…", async () => {
+                if (!window.SB_READY) return { error: "Accounts aren't connected yet — add your Supabase keys in supabase-client.js." };
+                const { error } = await window.sb.auth.signInWithPassword({ email, password: pass });
+                return { error: error ? friendly(error.message) : null };
+            });
         });
     }
 
@@ -106,33 +110,70 @@
                 f.terms.closest(".checkbox").style.color = "";
             }
             if (!ok) return;
-            submitFlow(signupForm, "Creating your account…", "Account created! Welcome to Kings Food Mart 🎉");
+            const fullName = f.fullName.value.trim();
+            const email = f.email.value.trim();
+            const phone = f.phone.value.trim();
+            const password = f.password.value;
+            submitFlow(signupForm, "Creating your account…", async () => {
+                if (!window.SB_READY) return { error: "Accounts aren't connected yet — add your Supabase keys in supabase-client.js." };
+                const { data, error } = await window.sb.auth.signUp({
+                    email, password,
+                    options: { data: { full_name: fullName, phone: phone } }
+                });
+                if (error) return { error: friendly(error.message) };
+                return { needsConfirm: !(data && data.session) };
+            });
         });
         signupForm.terms.addEventListener("change", () => {
             signupForm.terms.closest(".checkbox").style.color = "";
         });
     }
 
-    /* shared submit UX — front-end only; wire to a backend to persist accounts */
-    function submitFlow(form, pending, done) {
-        const btn = form.querySelector(".auth__submit");
+    /* turn Supabase's terse errors into friendlier copy */
+    function friendly(msg) {
+        const m = (msg || "").toLowerCase();
+        if (m.includes("invalid login")) return "That email or password doesn't match. Please try again.";
+        if (m.includes("already registered") || m.includes("already been registered")) return "That email already has an account — try signing in instead.";
+        if (m.includes("email not confirmed")) return "Please confirm your email first — check your inbox for the link.";
+        if (m.includes("password")) return "Password issue: " + msg;
+        return msg || "Something went wrong. Please try again.";
+    }
+
+    function showBanner(form, msg, isError) {
         const banner = form.querySelector(".auth__success");
+        if (!banner) { if (isError) alert(msg); return; }
+        banner.classList.toggle("is-error", !!isError);
+        banner.querySelector(".auth__success-text").textContent = msg;
+        banner.classList.add("is-visible");
+        banner.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    /* real submit — talks to Supabase, then redirects on success */
+    async function submitFlow(form, pending, action) {
+        const btn = form.querySelector(".auth__submit");
         const original = btn.textContent;
         btn.disabled = true;
         btn.textContent = pending;
-        setTimeout(() => {
+        try {
+            const res = (await action()) || {};
+            if (res.error) { showBanner(form, res.error, true); return; }
+            if (res.needsConfirm) {
+                showBanner(form, "Almost there! Check your email to confirm your account, then sign in.", false);
+                form.reset();
+                const mf = form.querySelector(".strength__fill");
+                const ml = form.querySelector(".strength__label");
+                if (mf) { mf.style.width = "0"; ml.textContent = ""; }
+                return;
+            }
+            // signed in — go to the store
+            showBanner(form, "Success! Taking you to the store…", false);
+            window.location.href = "index.html";
+        } catch (e) {
+            showBanner(form, "Something went wrong. Please try again.", true);
+        } finally {
             btn.disabled = false;
             btn.textContent = original;
-            if (banner) {
-                banner.querySelector(".auth__success-text").textContent = done;
-                banner.classList.add("is-visible");
-                banner.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-            form.reset();
-            const meterFill = form.querySelector(".strength__fill");
-            const meterLabel = form.querySelector(".strength__label");
-            if (meterFill) { meterFill.style.width = "0"; meterLabel.textContent = ""; }
-        }, 1100);
+        }
     }
 
     /* footer year */

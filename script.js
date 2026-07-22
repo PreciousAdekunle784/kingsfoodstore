@@ -156,7 +156,41 @@
             label.textContent = original;
         }, 1600);
         showToast(`${btn.dataset.name} added to your basket`);
+        saveCartItem(btn.dataset.productId);
     };
+
+    /* format a Naira value; pass-through if already a "₦…" string */
+    const naira = (v) => (typeof v === "number" || /^\d+(\.\d+)?$/.test(String(v)))
+        ? "₦" + Number(v).toLocaleString("en-NG") : v;
+
+    /* pull the true basket count from the database for the signed-in user */
+    const refreshCartCount = async () => {
+        if (!window.SB_READY || !window.sb || !cartCount) return;
+        const user = window.KFM && window.KFM.getUser();
+        if (!user) { items = 0; cartCount.textContent = "0"; return; }
+        const { data, error } = await window.sb.from("cart_items").select("qty").eq("user_id", user.id);
+        if (error) return;
+        items = (data || []).reduce((s, r) => s + (r.qty || 0), 0);
+        cartCount.textContent = String(items);
+    };
+
+    /* add one of a product to the signed-in shopper's cart (upsert qty) */
+    const saveCartItem = async (productId) => {
+        if (!productId || !window.SB_READY || !window.sb) return;
+        const user = window.KFM && window.KFM.getUser();
+        if (!user) return;
+        const { data: existing } = await window.sb.from("cart_items")
+            .select("id,qty").eq("user_id", user.id).eq("product_id", productId).maybeSingle();
+        if (existing) {
+            await window.sb.from("cart_items").update({ qty: existing.qty + 1 }).eq("id", existing.id);
+        } else {
+            await window.sb.from("cart_items").insert({ user_id: user.id, product_id: productId, qty: 1 });
+        }
+        refreshCartCount();
+    };
+
+    // keep the badge in sync with sign-in / sign-out
+    if (window.KFM && window.KFM.onChange) window.KFM.onChange(() => refreshCartCount());
 
     /* delegated so it also covers product cards added later by the rotator */
     document.addEventListener("click", (e) => {
@@ -267,8 +301,8 @@
                     <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated ${d.r} out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>${d.r}</span><span class="prod-card__stock ${stockCls}">${stockTxt}</span></div>
                     <h3 class="prod-card__name">${d.n}</h3>
                     <p class="prod-card__weight">${d.w}</p>
-                    <div class="prod-card__row"><p class="prod-card__price">${d.p}</p>
-                        <button class="quick-add" data-name="${d.n.replace(/&amp;/g, "and").replace(/<[^>]*>/g, "")}" aria-label="Quick add ${d.n.replace(/&amp;/g, "and")} to basket"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Quick Add</span></button>
+                    <div class="prod-card__row"><p class="prod-card__price">${naira(d.p)}</p>
+                        <button class="quick-add" data-name="${d.n.replace(/&amp;/g, "and").replace(/<[^>]*>/g, "")}" data-product-id="${d.id || ""}" aria-label="Quick add ${d.n.replace(/&amp;/g, "and")} to basket"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Quick Add</span></button>
                     </div>
                 </div>
             </li>`;
@@ -299,6 +333,36 @@
         prodGrid.addEventListener("mouseenter", stop);
         prodGrid.addEventListener("mouseleave", start);
         document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+
+        /* Prefer live products from the database (so Quick Add can save a real
+           product_id). Falls back silently to the built-in pool above if
+           Supabase isn't configured or returns nothing. */
+        (async () => {
+            if (!window.SB_READY || !window.sb) return;
+            try {
+                const { data, error } = await window.sb
+                    .from("products").select("*")
+                    .eq("is_bestseller", true).order("sort", { ascending: true });
+                if (error || !data || !data.length) return;
+                pool.length = 0;
+                data.forEach((row) => pool.push({
+                    id: row.id,
+                    n: row.name,
+                    w: row.weight || "",
+                    p: Number(row.price),
+                    r: String(row.rating),
+                    s: row.stock || "in",
+                    badge: row.badge || undefined,
+                    fresh: !!row.badge_fresh,
+                    tint: row.tint || "#F0EAD8",
+                    svg: row.svg || "s-sack",
+                    ss: "",
+                    img: row.image_url || ""
+                }));
+                cursor = 0;
+                render(cursor);
+            } catch (e) { /* keep the fallback pool */ }
+        })();
     }
 
     /* ── footer year ── */
