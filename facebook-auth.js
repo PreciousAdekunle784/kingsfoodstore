@@ -79,6 +79,9 @@ const FACEBOOK_API_VERSION = "v21.0"; // bump to a current Graph API version if 
                 showHint("Facebook sign-in was cancelled. You can try again or use another option.");
                 return;
             }
+            /* We fetch email opportunistically — Facebook returns it only if the
+               "email" permission has been granted (needs App Review to go public).
+               Until then, public_profile alone works with no review. */
             window.FB.api("/me", { fields: "name,email,picture.width(96)" }, (profile) => {
                 if (!profile || profile.error) {
                     showHint("Couldn't read your Facebook profile. Please try again.");
@@ -86,6 +89,6 @@ const FACEBOOK_API_VERSION = "v21.0"; // bump to a current Graph API version if 
                 }
                 finishSignIn(profile);
             });
-        }, { scope: "public_profile,email" });
+        }, { scope: "public_profile" });
     });
 })();

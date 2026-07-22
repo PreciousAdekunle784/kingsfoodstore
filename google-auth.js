@@ -9,7 +9,7 @@
    Google Sign-In does NOT work from a file:// path — you must open
    the site through a local server or a real domain. */
 
-const GOOGLE_CLIENT_ID = "1010388050138-1puc9kr63i9ocpqf06ha3c6917tec9re.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "979545143190-bumo0ammqiin1p94n2g55d9ucjem977b.apps.googleusercontent.com";
 
 (() => {
     "use strict";
@@ -44,6 +44,20 @@ const GOOGLE_CLIENT_ID = "1010388050138-1puc9kr63i9ocpqf06ha3c6917tec9re.apps.go
         window.location.href = "index.html";
     };
 
+    const renderBtn = () => {
+        const w = Math.round(Math.min(400, Math.max(200, mount.getBoundingClientRect().width || 320)));
+        mount.innerHTML = "";
+        google.accounts.id.renderButton(mount, {
+            type: "standard",
+            theme: "outline",
+            size: "large",
+            text: isSignup ? "signup_with" : "signin_with",
+            shape: "rectangular",
+            logo_alignment: "center",
+            width: w
+        });
+    };
+
     const init = () => {
         if (!(window.google && google.accounts && google.accounts.id)) return false;
         google.accounts.id.initialize({
@@ -52,14 +66,12 @@ const GOOGLE_CLIENT_ID = "1010388050138-1puc9kr63i9ocpqf06ha3c6917tec9re.apps.go
             auto_select: false,
             cancel_on_tap_outside: true
         });
-        google.accounts.id.renderButton(mount, {
-            type: "standard",
-            theme: "outline",
-            size: "large",
-            text: isSignup ? "signup_with" : "signin_with",
-            shape: "pill",
-            logo_alignment: "center",
-            width: 320
+        renderBtn();
+        // keep the button matched to its column when the window resizes
+        let rt = null;
+        window.addEventListener("resize", () => {
+            clearTimeout(rt);
+            rt = setTimeout(renderBtn, 180);
         });
         // optional One Tap prompt
         try { google.accounts.id.prompt(); } catch (e) { }

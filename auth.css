@@ -431,3 +431,22 @@
     .social-row { grid-template-columns: 1fr; }
     .auth__aside { padding: 24px; }
 }
+
+/* ── real Google sign-in button area ── */
+/* ── social sign-in buttons: Google + Facebook aligned in one stack ── */
+.social-stack { display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+#googleBtn { width: 100%; display: flex; justify-content: center; min-height: 46px; }
+#googleBtn > div,
+#googleBtn iframe { width: 100% !important; }
+.social-btn--full { width: 100%; min-height: 46px; }
+.google-hint {
+    margin: 2px 2px 0;
+    font-size: .8rem;
+    line-height: 1.45;
+    color: var(--terra);
+    background: rgba(245, 130, 48, .09);
+    border: 1px solid rgba(245, 130, 48, .22);
+    border-radius: 10px;
+    padding: 9px 12px;
+}
+.social-btn svg { flex: none; }
