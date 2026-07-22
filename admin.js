@@ -93,9 +93,14 @@
         let user = null;
         try { const { data } = await window.sb.auth.getSession(); user = data && data.session && data.session.user; } catch (e) {}
         if (!user) { root.innerHTML = notice("Please sign in", 'Sign in with your admin account, then reload. <a href="login.html">Sign in</a>'); return; }
-        // must be an admin
-        const { data: prof } = await window.sb.from("profiles").select("is_admin").eq("id", user.id).maybeSingle();
-        if (!prof || !prof.is_admin) {
+        // must be an admin — either the owner email, or flagged in profiles
+        const ADMIN_EMAIL = "kingsfoodstoreabuja@gmail.com";
+        let isAdmin = (user.email || "").toLowerCase() === ADMIN_EMAIL;
+        if (!isAdmin) {
+            const { data: prof } = await window.sb.from("profiles").select("is_admin").eq("id", user.id).maybeSingle();
+            isAdmin = !!(prof && prof.is_admin);
+        }
+        if (!isAdmin) {
             root.innerHTML = notice("Access denied", "This page is for store admins only.");
             if (subEl) subEl.textContent = "";
             filtersEl.innerHTML = "";
