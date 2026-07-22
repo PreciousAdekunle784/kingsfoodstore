@@ -226,7 +226,7 @@
                     // verify server-side (marks the order paid). If the function
                     // isn't deployed yet, payment is still captured and the order
                     // is saved as pending for you to confirm.
-                    try { await window.sb.functions.invoke("verify-payment", { body: { reference: txn.reference, order_id: orderId } }); } catch (e) { }
+                    try { await window.sb.functions.invoke("verify-payment", { body: { reference: txn.reference, order_id: orderId } }); } catch (e) {}
                     await window.sb.from("cart_items").delete().eq("user_id", user.id);
                     showSuccess(d.name, d.phone, orderId, txn.reference, t.total, "paystack");
                 } catch (e) {
