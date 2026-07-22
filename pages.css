@@ -718,3 +718,11 @@ body[data-auth="in"] .page-nav__orders { display: inline-flex; }
 @media (max-width: 1024px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 760px)  { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 460px)  { .shop-grid { grid-template-columns: 1fr; } }
+
+/* admin orders extras */
+.admin-cust { font-size: .95rem; color: var(--ink); margin-bottom: 2px; }
+.admin-cust a { color: var(--forest-deep); text-decoration: none; font-weight: 600; }
+.admin-addr { font-size: .84rem; color: var(--ink-soft); margin-bottom: 12px; }
+.admin-status { font-size: .8rem; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.admin-status__select { padding: 7px 10px; border-radius: 10px; border: 1.5px solid rgba(26,26,26,.14); background: #fff; font-family: var(--font-body); font-size: .85rem; font-weight: 600; color: var(--ink); cursor: pointer; }
+.shop-filters .chip { cursor: pointer; border: 1.5px solid rgba(26,26,26,.10); font-family: var(--font-body); }
