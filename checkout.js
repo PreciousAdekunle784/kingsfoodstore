@@ -65,12 +65,12 @@
         const mapEl = document.getElementById("coMap");
         const input = document.getElementById("coAddress");
         if (!mapEl || !input || !window.google || !window.google.maps) return;
-        const LAGOS = { lat: 6.5244, lng: 3.3792 };
+        const DEFAULT_CENTER = { lat: 9.0765, lng: 7.3986 };   // Abuja
         const map = new google.maps.Map(mapEl, {
-            center: LAGOS, zoom: 12, mapTypeControl: false,
+            center: DEFAULT_CENTER, zoom: 11, mapTypeControl: false,
             streetViewControl: false, fullscreenControl: false
         });
-        const marker = new google.maps.Marker({ map, position: LAGOS, draggable: true });
+        const marker = new google.maps.Marker({ map, position: DEFAULT_CENTER, draggable: true });
         const geocoder = new google.maps.Geocoder();
         const reverse = (pos) => geocoder.geocode({ location: pos }, (res, status) => {
             if (status === "OK" && res && res[0]) input.value = res[0].formatted_address;
