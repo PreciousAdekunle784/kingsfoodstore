@@ -22,6 +22,7 @@
     const notice = (t, b) => `<div class="cart-state"><h2>${t}</h2><p>${b}</p></div>`;
 
     let products = [];
+    let cats = [];
 
     const catOptions = (sel) => CATEGORIES.map((c) => `<option value="${esc(c)}" ${c === sel ? "selected" : ""}>${esc(c)}</option>`).join("");
     const svgOptions = (sel) => SVGS.map((s) => `<option value="${s}" ${s === sel ? "selected" : ""}>${s}</option>`).join("");
@@ -67,8 +68,24 @@
         </form>`;
     };
 
+    /* ── category pictures (the "Shop by Category" tiles) ── */
+    const catCard = (c) => `<div class="catadm" data-name="${esc(c.name)}">
+        <div class="catadm__media">${c.image_url ? `<img src="${esc(c.image_url)}" alt="" onerror="this.style.display='none'">` : `<span class="catadm__empty">No picture</span>`}</div>
+        <div class="catadm__info">
+            <strong>${esc(c.name)}</strong>
+            <label class="catadm__pick">
+                <input type="file" accept="image/*" class="catadm__file" data-name="${esc(c.name)}">
+                <span>${c.image_url ? "Change picture" : "Upload picture"}</span>
+            </label>
+            ${c.image_url ? `<button type="button" class="padmin__del catadm__clear" data-clear="${esc(c.name)}">Remove</button>` : ""}
+        </div>
+    </div>`;
+
     const render = () => {
         root.innerHTML = `
+            <h2 class="padmin__h">Category pictures</h2>
+            <p class="padmin__hint">These are the tiles in the “Shop by Category” section on your homepage.</p>
+            <div class="catadm__grid">${cats.map(catCard).join("")}</div>
             <h2 class="padmin__h">Add a new product</h2>
             <div id="newProduct">${productForm({})}</div>
             <h2 class="padmin__h">Your products (${products.length})</h2>
@@ -96,6 +113,39 @@
             slug: slugify(name)
         };
     };
+
+    // upload / change a CATEGORY picture
+    root.addEventListener("change", async (e) => {
+        const input = e.target.closest(".catadm__file");
+        if (!input || !input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const name = input.dataset.name;
+        if (file.size > 5 * 1024 * 1024) { showToast("Image too large — use one under 5MB."); input.value = ""; return; }
+        showToast("Uploading…");
+        try {
+            const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+            const path = "cat-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7) + "." + ext;
+            const { error: upErr } = await window.sb.storage.from("product-images").upload(path, file);
+            if (upErr) { showToast("Upload failed: " + upErr.message); return; }
+            const { data: pub } = window.sb.storage.from("product-images").getPublicUrl(path);
+            const { error } = await window.sb.from("categories")
+                .upsert({ name, image_url: pub.publicUrl }, { onConflict: "name" });
+            if (error) { showToast("Couldn't save: " + error.message); return; }
+            showToast(name + " picture updated");
+            load();
+        } catch (err) { showToast("Upload failed."); }
+        finally { input.value = ""; }
+    });
+
+    // remove a category picture
+    root.addEventListener("click", async (e) => {
+        const btn = e.target.closest("[data-clear]");
+        if (!btn) return;
+        const { error } = await window.sb.from("categories")
+            .upsert({ name: btn.dataset.clear, image_url: null }, { onConflict: "name" });
+        if (error) { showToast("Couldn't remove: " + error.message); return; }
+        showToast("Picture removed"); load();
+    });
 
     // upload a chosen photo to Supabase Storage, then fill in its URL
     root.addEventListener("change", async (e) => {
@@ -159,6 +209,10 @@
         const { data, error } = await window.sb.from("products").select("*").order("sort", { ascending: true }).order("name");
         if (error) { root.innerHTML = notice("Couldn't load products", esc(error.message)); return; }
         products = data || [];
+        // category pictures — if the table isn't set up yet, fall back to the known list
+        const { data: cd, error: ce } = await window.sb.from("categories").select("*").order("sort", { ascending: true });
+        cats = (!ce && cd && cd.length) ? cd : CATEGORIES.map((n, i) => ({ name: n, image_url: null, sort: i + 1 }));
+        if (ce) console.warn("[KFM] categories table not found — run supabase-categories.sql");
         render();
     };
 

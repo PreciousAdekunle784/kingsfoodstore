@@ -440,6 +440,47 @@
         })();
     }
 
+    /* ── category tiles: admin-set pictures + live product counts ── */
+    const catGrid = document.querySelector(".cat-grid");
+    if (catGrid) {
+        (async () => {
+            if (!window.SB_READY || !window.sb) return;
+            const tiles = Array.from(catGrid.querySelectorAll(".cat-card"));
+            const nameOf = (li) => {
+                const el = li.querySelector(".cat-card__name");
+                return el ? el.textContent.trim() : "";
+            };
+            // pictures the admin set
+            try {
+                const { data } = await window.sb.from("categories").select("name,image_url");
+                if (data && data.length) {
+                    const byName = {};
+                    data.forEach((c) => { byName[c.name] = c.image_url; });
+                    tiles.forEach((li) => {
+                        const url = byName[nameOf(li)];
+                        if (!url) return;
+                        const img = li.querySelector(".cat-card__photo");
+                        if (img) { img.src = url; img.classList.add("is-loaded"); img.classList.remove("is-failed"); }
+                    });
+                }
+            } catch (e) { /* keep the built-in tile pictures */ }
+            // live product counts
+            try {
+                const { data } = await window.sb.from("products").select("category");
+                if (data) {
+                    const counts = {};
+                    data.forEach((p) => { if (p.category) counts[p.category] = (counts[p.category] || 0) + 1; });
+                    tiles.forEach((li) => {
+                        const el = li.querySelector(".cat-card__count");
+                        if (!el) return;
+                        const n = counts[nameOf(li)] || 0;
+                        el.textContent = n === 1 ? "1 product" : n + " products";
+                    });
+                }
+            } catch (e) { /* leave the printed counts */ }
+        })();
+    }
+
     /* ── footer year ── */
     document.getElementById("year").textContent = String(new Date().getFullYear());
 })();
