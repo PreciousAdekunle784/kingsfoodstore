@@ -318,212 +318,13 @@
         </div>
 
         <div class="hero__visual reveal" data-parallax="0.06">
-          <figure class="hero__scene" aria-label="A kitchen table arranged with rice, spaghetti, indomie noodles, tinned tomatoes, powdered milk, cooking oil, seasoning cubes and everyday provisions">
-            <img class="hero__photo" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80" alt="A fresh spread of grains, vegetables, spices and pantry staples arranged on a market table" loading="eager" decoding="async" />
-            <svg viewBox="0 0 720 640" role="img" aria-hidden="true" class="hero__svg">
-              <defs>
-                <linearGradient id="h-sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#FDF3E0"/><stop offset=".55" stop-color="#FBEBD2"/><stop offset="1" stop-color="#F2E3C8"/>
-                </linearGradient>
-                <linearGradient id="h-table" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#C39668"/><stop offset="1" stop-color="#9A6E44"/>
-                </linearGradient>
-                <linearGradient id="h-tableface" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#A97B4E"/><stop offset="1" stop-color="#8A5F3B"/>
-                </linearGradient>
-                <radialGradient id="h-light" cx=".26" cy=".14" r=".95">
-                  <stop offset="0" stop-color="#FFE9B0" stop-opacity=".9"/><stop offset=".5" stop-color="#FFEFC9" stop-opacity=".35"/><stop offset="1" stop-color="#FFEFC9" stop-opacity="0"/>
-                </radialGradient>
-                <filter id="h-blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
-              </defs>
-
-              <!-- backdrop & morning light -->
-              <rect x="0" y="0" width="720" height="640" rx="36" fill="url(#h-sky)"/>
-              <rect x="0" y="0" width="720" height="640" rx="36" fill="url(#h-light)"/>
-              <g opacity=".22">
-                <path d="M120 -20 L260 -20 L560 640 L420 640 Z" fill="#FFF6DC"/>
-                <path d="M300 -20 L370 -20 L660 640 L590 640 Z" fill="#FFF6DC"/>
-              </g>
-              <circle cx="150" cy="90" r="64" fill="#FFE9B0" opacity=".8" filter="url(#h-blur)"/>
-
-              <!-- window frame hint -->
-              <g stroke="#E3CBA4" stroke-width="10" opacity=".5">
-                <path d="M470 40 L680 40 L680 250"/><path d="M575 40 L575 210"/><path d="M470 145 L680 145"/>
-              </g>
-
-              <!-- hanging herbs -->
-              <g opacity=".85">
-                <path d="M60 0 L60 66 M96 0 L96 46" stroke="#8A5F3B" stroke-width="3"/>
-                <path d="M60 66 Q46 82 58 96 Q70 84 60 66Z M60 78 Q48 92 60 108 Q72 94 60 78Z" fill="#5C8A4E"/>
-                <path d="M96 46 Q84 60 94 74 Q106 62 96 46Z M96 58 Q86 72 96 86 Q108 72 96 58Z" fill="#7BA86A"/>
-              </g>
-
-              <!-- table -->
-              <rect x="0" y="398" width="720" height="52" fill="url(#h-table)"/>
-              <path d="M0 450 L720 450 L720 640 L0 640 Z" fill="url(#h-tableface)"/>
-              <g stroke="#7C532F" stroke-width="2" opacity=".45">
-                <path d="M0 416 Q360 410 720 418"/><path d="M0 436 Q360 430 720 438"/>
-              </g>
-              <g stroke="#6E4829" stroke-width="3" opacity=".3">
-                <path d="M90 450 L60 640 M300 450 L290 640 M520 450 L540 640 M680 450 L710 640"/>
-              </g>
-              <rect x="0" y="398" width="720" height="242" fill="url(#h-light)" opacity=".5"/>
-
-              <!-- soft cast shadows -->
-              <g fill="#3B2A18" filter="url(#h-blur)">
-                <ellipse cx="150" cy="404" rx="104" ry="14" opacity=".22"/>
-                <ellipse cx="392" cy="408" rx="80" ry="12" opacity=".2"/>
-                <ellipse cx="580" cy="406" rx="98" ry="13" opacity=".22"/>
-                <ellipse cx="284" cy="412" rx="60" ry="9" opacity=".18"/>
-              </g>
-
-              <!-- ═ woven basket, overflowing (left) ═ -->
-              <g>
-                <!-- produce spilling above rim -->
-                <path d="M96 268 Q88 236 112 226 Q134 220 142 244 Q146 266 124 274Z" fill="#4E9E54"/>
-                <path d="M148 258 Q140 224 168 218 Q192 214 196 242 Q198 266 172 270Z" fill="#66BB6A"/>
-                <path d="M118 240 Q112 214 134 208 Q154 204 158 228" fill="#7DC981"/>
-                <circle cx="196" cy="272" r="20" fill="#D8483B"/>
-                <ellipse cx="190" cy="266" rx="6" ry="4" fill="#fff" opacity=".3"/>
-                <circle cx="222" cy="284" r="17" fill="#F5A623"/>
-                <path d="M84 286 Q78 262 96 254" stroke="#C96A3D" stroke-width="9" fill="none" stroke-linecap="round"/>
-                <!-- bread peeking -->
-                <path d="M212 250 Q214 232 240 232 Q266 232 268 252 L266 268 Q240 276 214 268Z" fill="#E0A45C"/>
-                <path d="M224 240 Q228 246 224 252 M244 238 Q248 244 244 250" stroke="#C07F35" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                <!-- basket body -->
-                <path d="M64 284 L248 284 Q244 398 226 402 Q156 412 86 402 Q68 398 64 284Z" fill="#C99B62"/>
-                <path d="M64 284 L248 284 Q244 398 226 402 Q156 412 86 402 Q68 398 64 284Z" fill="url(#h-light)" opacity=".35"/>
-                <g stroke="#A87B45" stroke-width="3.5" opacity=".8">
-                  <path d="M68 306 Q156 318 244 306"/><path d="M72 332 Q156 344 240 332"/><path d="M76 358 Q156 370 236 358"/><path d="M82 382 Q156 394 230 382"/>
-                </g>
-                <g stroke="#B8placeholder" stroke-width="0"></g>
-                <g stroke="#8A5F3B" stroke-width="3" opacity=".5">
-                  <path d="M92 288 L102 402 M128 288 L134 406 M164 288 L164 408 M200 288 L194 406 M232 288 L222 402"/>
-                </g>
-                <rect x="58" y="276" width="196" height="16" rx="8" fill="#B88950"/>
-                <path d="M108 276 Q156 216 204 276" stroke="#A87B45" stroke-width="11" fill="none" stroke-linecap="round"/>
-              </g>
-
-              <!-- ═ rice sack (center-left) ═ -->
-              <g>
-                <path d="M272 302 Q262 300 264 288 L276 268 Q284 258 296 262 L332 262 Q344 258 352 268 L364 288 Q366 300 356 302 L356 302 Q368 386 352 398 Q314 412 276 398 Q260 386 272 302Z" fill="#F3E8D3"/>
-                <path d="M272 302 Q262 300 264 288 L276 268 Q284 258 296 262 L332 262 Q344 258 352 268 L364 288 Q366 300 356 302" fill="#E7D8BC"/>
-                <path d="M284 268 Q280 252 292 246 L336 246 Q348 252 344 268 Q314 278 284 268Z" fill="#EDDFC7"/>
-                <rect x="286" y="258" width="56" height="9" rx="4.5" fill="#C96A3D"/>
-                <rect x="282" y="316" width="64" height="44" rx="8" fill="#2E7D32"/>
-                <path d="M292 330 Q298 322 304 330 M308 328 Q314 320 320 328 M324 330 Q330 322 336 330" stroke="#FFF9F2" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                <rect x="292" y="342" width="44" height="4" rx="2" fill="#FFF9F2" opacity=".85"/>
-                <rect x="298" y="350" width="32" height="3" rx="1.5" fill="#D4A017"/>
-                <path d="M272 372 Q314 382 356 372" stroke="#D9C8A8" stroke-width="2.6" fill="none" opacity=".8"/>
-                <!-- spilled rice grains -->
-                <g fill="#F3E8D3" stroke="#D9C8A8" stroke-width="1">
-                  <ellipse cx="254" cy="400" rx="5" ry="2.6" transform="rotate(-16 254 400)"/>
-                  <ellipse cx="266" cy="406" rx="5" ry="2.6" transform="rotate(20 266 406)"/>
-                  <ellipse cx="244" cy="406" rx="5" ry="2.6" transform="rotate(8 244 406)"/>
-                </g>
-              </g>
-
-              <!-- ═ garri bowl (center) ═ -->
-              <g>
-                <ellipse cx="416" cy="348" rx="52" ry="17" fill="#EDD9A8"/>
-                <ellipse cx="416" cy="344" rx="52" ry="17" fill="#F2E3B9"/>
-                <g fill="#E3C98D">
-                  <circle cx="392" cy="340" r="3"/><circle cx="410" cy="336" r="3"/><circle cx="430" cy="341" r="3"/><circle cx="444" cy="336" r="3"/><circle cx="404" cy="346" r="3"/><circle cx="424" cy="348" r="3"/>
-                </g>
-                <path d="M364 348 Q368 396 416 396 Q464 396 468 348 Q416 366 364 348Z" fill="#B88950"/>
-                <path d="M364 348 Q416 366 468 348 Q416 372 364 348Z" fill="#1A1A1A" opacity=".14"/>
-                <path d="M372 368 Q416 380 460 368" stroke="#9A6E44" stroke-width="2.6" fill="none" opacity=".7"/>
-              </g>
-
-              <!-- ═ beans jar + spice jars (center) ═ -->
-              <g>
-                <path d="M382 258 Q378 262 378 270 L378 316 Q378 326 388 326 L424 326 Q434 326 434 316 L434 270 Q434 262 430 258 L430 252 L382 252Z" fill="#EAF1E4" opacity=".92"/>
-                <rect x="379" y="242" width="54" height="12" rx="6" fill="#A3B18A"/>
-                <path d="M382 280 L430 280 L430 316 Q430 322 424 322 L388 322 Q382 322 382 316Z" fill="#7B4A2D"/>
-                <g fill="#93583A"><circle cx="394" cy="292" r="4"/><circle cx="410" cy="300" r="4"/><circle cx="422" cy="288" r="4"/><circle cx="400" cy="310" r="4"/><circle cx="418" cy="312" r="4"/></g>
-                <path d="M386 260 L386 318" stroke="#fff" stroke-width="4" opacity=".4" stroke-linecap="round"/>
-                <!-- spice jars -->
-                <g>
-                  <rect x="448" y="286" width="34" height="46" rx="8" fill="#EAF1E4" opacity=".9"/>
-                  <rect x="450" y="300" width="30" height="30" rx="7" fill="#C96A3D"/>
-                  <rect x="452" y="278" width="26" height="12" rx="5" fill="#8A5F3B"/>
-                  <path d="M453 292 L453 326" stroke="#fff" stroke-width="3" opacity=".45" stroke-linecap="round"/>
-                </g>
-                <g>
-                  <rect x="490" y="296" width="30" height="38" rx="7" fill="#EAF1E4" opacity=".9"/>
-                  <rect x="492" y="308" width="26" height="24" rx="6" fill="#D4A017"/>
-                  <rect x="494" y="289" width="22" height="11" rx="5" fill="#8A5F3B"/>
-                  <path d="M495 302 L495 328" stroke="#fff" stroke-width="3" opacity=".45" stroke-linecap="round"/>
-                </g>
-              </g>
-
-              <!-- ═ palm & vegetable oil (right) ═ -->
-              <g>
-                <path d="M542 218 L560 218 L560 232 L558 236 L558 246 Q576 254 576 274 L576 380 Q576 394 562 394 L540 394 Q526 394 526 380 L526 274 Q526 254 544 246 L544 236 L542 232Z" fill="#F2EFE6" opacity=".6"/>
-                <path d="M528 276 L574 276 L574 380 Q574 392 562 392 L540 392 Q528 392 528 380Z" fill="#C0392B"/>
-                <path d="M528 276 Q551 270 574 276 L574 284 Q551 278 528 284Z" fill="#fff" opacity=".16"/>
-                <rect x="540" y="212" width="22" height="12" rx="5" fill="#2E7D32"/>
-                <rect x="534" y="296" width="34" height="52" rx="6" fill="#FFF9F2"/>
-                <path d="M551 306 Q543 306 543 314 Q543 322 551 326 Q559 322 559 314 Q559 306 551 306Z" fill="#C0392B"/>
-                <rect x="540" y="332" width="22" height="3.4" rx="1.7" fill="#C96A3D"/>
-                <rect x="543" y="339" width="16" height="3" rx="1.5" fill="#C8BFA8"/>
-                <path d="M532 254 L532 384" stroke="#fff" stroke-width="5" opacity=".4" stroke-linecap="round"/>
-
-                <path d="M604 238 L620 238 L620 250 L618 254 L618 262 Q634 270 634 288 L634 384 Q634 396 622 396 L602 396 Q590 396 590 384 L590 288 Q590 270 606 262 L606 254 L604 250Z" fill="#F2EFE6" opacity=".6"/>
-                <path d="M592 290 L632 290 L632 384 Q632 394 622 394 L602 394 Q592 394 592 384Z" fill="#DBA512"/>
-                <rect x="602" y="232" width="20" height="11" rx="5" fill="#C96A3D"/>
-                <rect x="597" y="306" width="30" height="46" rx="6" fill="#FFF9F2"/>
-                <path d="M612 314 Q604 320 612 330 Q620 320 612 314Z" fill="#DBA512"/>
-                <rect x="602" y="336" width="20" height="3.2" rx="1.6" fill="#2E7D32"/>
-                <path d="M596 268 L596 388" stroke="#fff" stroke-width="4" opacity=".4" stroke-linecap="round"/>
-              </g>
-
-              <!-- ═ eggs bowl (right front) ═ -->
-              <g>
-                <ellipse cx="668" cy="392" rx="44" ry="10" fill="#3B2A18" opacity=".16" filter="url(#h-blur)"/>
-                <ellipse cx="656" cy="352" rx="11" ry="14" fill="#F6E7CE"/>
-                <ellipse cx="678" cy="350" rx="11" ry="14" fill="#EFD9B8"/>
-                <ellipse cx="667" cy="342" rx="11" ry="14" fill="#FBF1DF"/>
-                <path d="M632 356 Q634 388 667 388 Q700 388 702 356 Q667 368 632 356Z" fill="#C96A3D"/>
-                <path d="M632 356 Q667 368 702 356 Q667 374 632 356Z" fill="#1A1A1A" opacity=".12"/>
-              </g>
-
-              <!-- ═ tomatoes, peppers, onions (front) ═ -->
-              <g>
-                <ellipse cx="360" cy="428" rx="120" ry="12" fill="#3B2A18" opacity=".14" filter="url(#h-blur)"/>
-                <circle cx="300" cy="412" r="24" fill="#D8483B"/>
-                <ellipse cx="292" cy="404" rx="7" ry="5" fill="#fff" opacity=".3" transform="rotate(-20 292 404)"/>
-                <path d="M300 390 L292 384 M300 390 L308 384 M300 390 L300 382" stroke="#66BB6A" stroke-width="3.4" stroke-linecap="round"/>
-                <circle cx="344" cy="420" r="21" fill="#E25547"/>
-                <ellipse cx="337" cy="413" rx="6" ry="4" fill="#fff" opacity=".3" transform="rotate(-20 337 413)"/>
-                <circle cx="326" cy="396" r="17" fill="#CE4237"/>
-                <!-- scotch bonnets -->
-                <path d="M384 428 Q382 410 396 408 Q400 406 404 408 Q412 404 418 410 Q426 414 422 428 Q420 440 402 442 Q386 440 384 428Z" fill="#E2711D"/>
-                <path d="M402 408 Q402 400 408 398" stroke="#2E7D32" stroke-width="3.4" fill="none" stroke-linecap="round"/>
-                <path d="M430 424 Q428 410 440 408 Q452 406 454 418 Q456 430 442 432 Q432 432 430 424Z" fill="#D8B421"/>
-                <path d="M442 408 Q442 402 448 400" stroke="#2E7D32" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <!-- onions -->
-                <path d="M488 400 Q510 410 508 426 Q506 442 488 443 Q470 442 468 426 Q466 410 488 400Z" fill="#9B5DA0"/>
-                <path d="M480 404 Q474 420 478 440 M488 401 Q487 420 488 443 M496 404 Q502 420 498 440" stroke="#7E4483" stroke-width="2" fill="none" opacity=".6"/>
-                <path d="M485 399 Q484 392 479 390 M491 399 Q493 392 498 390" stroke="#A3B18A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-              </g>
-
-              <!-- greens sprig on table right -->
-              <g transform="translate(700 428) rotate(14)" opacity=".95">
-                <path d="M0 0 Q-20 -6 -34 -22 Q-12 -26 0 -12Z" fill="#66BB6A"/>
-                <path d="M0 0 Q-24 4 -40 -4 Q-22 -16 -2 -8Z" fill="#4E9E54"/>
-              </g>
-
-              <!-- floating grain dust in light -->
-              <g fill="#FFE9B0">
-                <circle cx="210" cy="150" r="3" opacity=".8"/><circle cx="260" cy="110" r="2" opacity=".6"/>
-                <circle cx="330" cy="170" r="2.4" opacity=".7"/><circle cx="170" cy="210" r="2" opacity=".55"/>
-                <circle cx="420" cy="120" r="2" opacity=".5"/><circle cx="380" cy="200" r="1.8" opacity=".6"/>
-              </g>
-            </svg>
-
-            <figcaption class="visually-hidden">Premium foodstuff arranged on a wooden kitchen table in morning light</figcaption>
-          </figure>
+          <div class="announce" id="announceBoard" aria-live="polite">
+            <div class="announce__inner">
+              <p class="announce__eyebrow">Kings Food Mart</p>
+              <h2 class="announce__title">Welcome to the store</h2>
+              <p class="announce__body">Loading today's announcements…</p>
+            </div>
+          </div>
 
           <!-- floating UI cards -->
           <div class="float-card float-card--rating" data-float="1">
@@ -542,7 +343,7 @@
             <span class="float-card__icon float-card__icon--leaf" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 9 12 4 20 4c0 9-5 15-13 15" fill="currentColor" opacity=".15"/><path d="M5 19C8 13 12 9 17 7"/></svg>
             </span>
-            <span><strong>Freshly</strong> Sourced</span>
+            <span><strong>Genuine</strong> Brands</span>
           </div>
           <div class="float-card float-card--pay" data-float="4">
             <span class="float-card__icon float-card__icon--terra" aria-hidden="true">
@@ -643,7 +444,7 @@
         <ul class="prod-grid" role="list" id="prodGrid">
           <!-- product cards injected for markup economy? No — static for SEO. -->
           <li class="prod-card reveal" style="--tint:#F0EAD8">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80" alt="Premium Long-Grain Rice" loading="lazy" decoding="async" /><span class="prod-card__badge">Best Seller</span><svg viewBox="0 0 120 120" style="--grain:#D4A017" aria-hidden="true"><use href="#s-sack"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/rice-longgrain.svg" alt="Premium Long-Grain Rice" loading="lazy" decoding="async" /><span class="prod-card__badge">Best Seller</span><svg viewBox="0 0 120 120" style="--grain:#D4A017" aria-hidden="true"><use href="#s-sack"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.9 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.9</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Premium Long-Grain Rice</h3>
@@ -654,7 +455,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#EFE4D6">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=600&q=80" alt="Honey Brown Beans" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--fill:#7B4A2D;--lid:#A3B18A" aria-hidden="true"><use href="#s-jar"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/beans-brown.svg" alt="Honey Brown Beans" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--fill:#7B4A2D;--lid:#A3B18A" aria-hidden="true"><use href="#s-jar"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.8 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.8</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Honey Brown Beans</h3>
@@ -665,7 +466,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F3ECD9">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1612257999756-9dae14cff8f2?auto=format&fit=crop&w=600&q=80" alt="Indomie Instant Noodles" loading="lazy" decoding="async" /><span class="prod-card__badge">Popular</span><svg viewBox="0 0 120 120" style="--grain:#E8C558" aria-hidden="true"><use href="#s-sack"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/indomie-carton.svg" alt="Indomie Instant Noodles" loading="lazy" decoding="async" /><span class="prod-card__badge">Popular</span><svg viewBox="0 0 120 120" style="--grain:#E8C558" aria-hidden="true"><use href="#s-sack"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.9 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.9</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Indomie Instant Noodles</h3>
@@ -676,7 +477,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F5E8D2">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80" alt="Devon King's Vegetable Oil" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--oil:#C0392B;--cap:#2E7D32" aria-hidden="true"><use href="#s-bottle"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/oil-vegetable.svg" alt="Devon King's Vegetable Oil" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--oil:#C0392B;--cap:#2E7D32" aria-hidden="true"><use href="#s-bottle"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.7 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.7</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Devon King's Vegetable Oil</h3>
@@ -687,7 +488,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F6EDD6">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1608797178974-15b35a64ede9?auto=format&fit=crop&w=600&q=80" alt="Pure Groundnut Oil" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--oil:#DBA512;--cap:#C96A3D" aria-hidden="true"><use href="#s-bottle"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/oil-groundnut.svg" alt="Pure Groundnut Oil" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--oil:#DBA512;--cap:#C96A3D" aria-hidden="true"><use href="#s-bottle"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.8 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.8</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Pure Groundnut Oil</h3>
@@ -698,7 +499,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F2EDE2">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Golden Penny Flour" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--label:#2E7D32" aria-hidden="true"><use href="#s-flour"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/flour-goldenpenny.svg" alt="Golden Penny Flour" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--label:#2E7D32" aria-hidden="true"><use href="#s-flour"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.6 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.6</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Golden Penny Flour</h3>
@@ -709,7 +510,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#EFE9DA">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1568254183919-78a4f43a2877?auto=format&fit=crop&w=600&q=80" alt="Golden Penny Semovita" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--label:#D4A017" aria-hidden="true"><use href="#s-flour"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/semovita.svg" alt="Golden Penny Semovita" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" style="--label:#D4A017" aria-hidden="true"><use href="#s-flour"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.7 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.7</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Golden Penny Semovita</h3>
@@ -720,7 +521,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F5E2DC">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=600&q=80" alt="Gino Tomato Paste" loading="lazy" decoding="async" /><span class="prod-card__badge prod-card__badge--fresh">Kitchen Staple</span><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-tomato"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/gino-paste.svg" alt="Gino Tomato Paste" loading="lazy" decoding="async" /><span class="prod-card__badge prod-card__badge--fresh">Kitchen Staple</span><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-tomato"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.9 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.9</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Gino Tomato Paste</h3>
@@ -731,7 +532,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F7E7D4">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1583119022894-919a68a3d0e3?auto=format&fit=crop&w=600&q=80" alt="Maggi Star Seasoning" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-pepper"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/maggi-cubes.svg" alt="Maggi Star Seasoning" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-pepper"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.8 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.8</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Maggi Star Seasoning</h3>
@@ -742,7 +543,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F4E4D2">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=600&q=80" alt="Peak Powdered Milk" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-crayfish"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/milk-peak.svg" alt="Peak Powdered Milk" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-crayfish"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.9 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.9</span><span class="prod-card__stock prod-card__stock--low">Low stock</span></div>
               <h3 class="prod-card__name">Peak Powdered Milk</h3>
@@ -753,7 +554,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#EFE5D3">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80" alt="Titus Sardines" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-fish"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/titus-sardine.svg" alt="Titus Sardines" loading="lazy" decoding="async" /><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#s-fish"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 4.7 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>4.7</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Titus Sardines</h3>
@@ -764,7 +565,7 @@
             </div>
           </li>
           <li class="prod-card reveal" style="--tint:#F4E3D3">
-            <div class="prod-card__media"><img class="photo prod-card__photo" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80" alt="Milo Chocolate Drink" loading="lazy" decoding="async" /><span class="prod-card__badge">Aromatic</span><svg viewBox="0 0 120 120" style="--fill:#C96A3D;--lid:#8A5F3B" aria-hidden="true"><use href="#s-jar"/></svg></div>
+            <div class="prod-card__media"><img class="photo prod-card__photo" src="/products/milo.svg" alt="Milo Chocolate Drink" loading="lazy" decoding="async" /><span class="prod-card__badge">Aromatic</span><svg viewBox="0 0 120 120" style="--fill:#C96A3D;--lid:#8A5F3B" aria-hidden="true"><use href="#s-jar"/></svg></div>
             <div class="prod-card__info">
               <div class="prod-card__meta"><span class="prod-card__rating" aria-label="Rated 5.0 out of 5"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><use href="#s-star"/></svg>5.0</span><span class="prod-card__stock prod-card__stock--in">In stock</span></div>
               <h3 class="prod-card__name">Milo Chocolate Drink</h3>

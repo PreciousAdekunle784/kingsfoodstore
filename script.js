@@ -274,24 +274,24 @@
         const ph = (id) => `${P}${id}?auto=format&fit=crop&w=600&q=80`;
         // pool is larger than what's shown, so the shelf keeps refreshing
         const pool = [
-            { n: "Premium Long-Grain Rice", w: "10&nbsp;kg bag", p: "₦18,500", r: "4.9", s: "in", badge: "Best Seller", tint: "#F0EAD8", svg: "s-sack", ss: "--grain:#D4A017", img: ph("photo-1586201375761-83865001e31c") },
-            { n: "Golden Penny Spaghetti", w: "500&nbsp;g", p: "₦850", r: "4.8", s: "in", badge: "Popular", tint: "#F3E7CE", svg: "s-sack", ss: "--grain:#E8C558", img: ph("photo-1621996346565-e3dbc646d9a9") },
-            { n: "Indomie Instant Noodles", w: "Carton of 40", p: "₦8,200", r: "4.9", s: "in", badge: "Best Seller", tint: "#F5E0C8", svg: "s-sack", ss: "--grain:#D98A2B", img: ph("photo-1612929633738-8fe44f7ec841") },
-            { n: "Macaroni Pasta", w: "500&nbsp;g", p: "₦900", r: "4.6", s: "in", tint: "#F3E7CE", svg: "s-sack", ss: "--grain:#E8C558", img: ph("photo-1551462147-ff29053bfc14") },
-            { n: "Honey Brown Beans", w: "5&nbsp;kg", p: "₦9,200", r: "4.7", s: "in", tint: "#EFE4D6", svg: "s-jar", ss: "--fill:#7B4A2D;--lid:#A3B18A", img: ph("photo-1515543237350-b3eea1ec8082") },
-            { n: "Devon King's Vegetable Oil", w: "5&nbsp;litres", p: "₦11,000", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#DBA512;--cap:#C96A3D", img: ph("photo-1608797178974-15b35a64ede9") },
-            { n: "Pure Groundnut Oil", w: "5&nbsp;litres", p: "₦13,500", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#E0B23C;--cap:#2E7D32", img: ph("photo-1474979266404-7eaacbcd87c5") },
-            { n: "Golden Penny Semovita", w: "5&nbsp;kg", p: "₦8,900", r: "4.7", s: "in", tint: "#EFE9DA", svg: "s-flour", ss: "--label:#D4A017", img: ph("photo-1568254183919-78a4f43a2877") },
-            { n: "Golden Penny Flour", w: "2&nbsp;kg", p: "₦3,200", r: "4.6", s: "in", tint: "#F2EDE2", svg: "s-flour", ss: "--label:#2E7D32", img: ph("photo-1509440159596-0249088772ff") },
-            { n: "Gino Tomato Paste", w: "Sachet × 20", p: "₦3,600", r: "4.8", s: "in", badge: "Kitchen Staple", tint: "#F5E2DC", svg: "s-jar", ss: "--fill:#C0392B;--lid:#8A5F3B", img: ph("photo-1546094096-0df4bcaaa337") },
-            { n: "Titus Sardines", w: "Pack of 3", p: "₦2,700", r: "4.7", s: "low", tint: "#EFE5D3", svg: "s-fish", ss: "", img: ph("photo-1519708227418-c8fd9a32b7a2") },
-            { n: "Peak Powdered Milk", w: "400&nbsp;g tin", p: "₦4,200", r: "4.9", s: "in", badge: "Best Seller", tint: "#EAF0F4", svg: "s-jar", ss: "--fill:#EDE7DA;--lid:#2E5AAC", img: ph("photo-1550583724-b2692b85b150") },
-            { n: "Nestlé Golden Morn", w: "500&nbsp;g", p: "₦2,600", r: "4.7", s: "in", tint: "#F1E4C9", svg: "s-jar", ss: "--fill:#D9A441;--lid:#7B4A2D", img: ph("photo-1517686469429-8bdb88b9f907") },
-            { n: "Kellogg's Cornflakes", w: "500&nbsp;g", p: "₦3,500", r: "4.6", s: "in", tint: "#F5E3C2", svg: "s-jar", ss: "--fill:#E6B23C;--lid:#C0392B", img: ph("photo-1521483451396-84702a8a3d78") },
-            { n: "Maggi Star Seasoning", w: "100 cubes", p: "₦1,500", r: "5.0", s: "in", badge: "Kitchen Staple", tint: "#F4E3D3", svg: "s-jar", ss: "--fill:#C0392B;--lid:#F1C40F", img: ph("photo-1596040033229-a9821ebd058d") },
-            { n: "Milo Chocolate Drink", w: "500&nbsp;g tin", p: "₦3,800", r: "4.9", s: "in", badge: "Popular", tint: "#E7D8C4", svg: "s-jar", ss: "--fill:#5B3A1E;--lid:#2E7D32", img: ph("photo-1541167760496-1628856ab772") },
-            { n: "Cadbury Bournvita", w: "500&nbsp;g", p: "₦3,400", r: "4.7", s: "in", tint: "#E7D8C4", svg: "s-jar", ss: "--fill:#5B3A1E;--lid:#C0392B", img: ph("photo-1541167760496-1628856ab772") },
-            { n: "Dangote Sugar", w: "1&nbsp;kg", p: "₦1,600", r: "4.7", s: "in", tint: "#F3EEE6", svg: "s-jar", ss: "--fill:#FFFFFF;--lid:#2E5AAC", img: ph("photo-1581441363689-1f3c3c414635") }
+            { n: "Premium Long-Grain Rice", w: "10&nbsp;kg bag", p: "₦18,500", r: "4.9", s: "in", badge: "Best Seller", tint: "#F0EAD8", svg: "s-sack", ss: "--grain:#D4A017", img: "/products/rice-longgrain.svg" },
+            { n: "Golden Penny Spaghetti", w: "500&nbsp;g", p: "₦850", r: "4.8", s: "in", badge: "Popular", tint: "#F3E7CE", svg: "s-sack", ss: "--grain:#E8C558", img: "/products/spaghetti-golden.svg" },
+            { n: "Indomie Instant Noodles", w: "Carton of 40", p: "₦8,200", r: "4.9", s: "in", badge: "Best Seller", tint: "#F5E0C8", svg: "s-sack", ss: "--grain:#D98A2B", img: "/products/indomie-carton.svg" },
+            { n: "Macaroni Pasta", w: "500&nbsp;g", p: "₦900", r: "4.6", s: "in", tint: "#F3E7CE", svg: "s-sack", ss: "--grain:#E8C558", img: "/products/macaroni.svg" },
+            { n: "Honey Brown Beans", w: "5&nbsp;kg", p: "₦9,200", r: "4.7", s: "in", tint: "#EFE4D6", svg: "s-jar", ss: "--fill:#7B4A2D;--lid:#A3B18A", img: "/products/beans-brown.svg" },
+            { n: "Devon King's Vegetable Oil", w: "5&nbsp;litres", p: "₦11,000", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#DBA512;--cap:#C96A3D", img: "/products/oil-vegetable.svg" },
+            { n: "Pure Groundnut Oil", w: "5&nbsp;litres", p: "₦13,500", r: "4.8", s: "in", tint: "#F6EDD6", svg: "s-bottle", ss: "--oil:#E0B23C;--cap:#2E7D32", img: "/products/oil-groundnut.svg" },
+            { n: "Golden Penny Semovita", w: "5&nbsp;kg", p: "₦8,900", r: "4.7", s: "in", tint: "#EFE9DA", svg: "s-flour", ss: "--label:#D4A017", img: "/products/semovita.svg" },
+            { n: "Golden Penny Flour", w: "2&nbsp;kg", p: "₦3,200", r: "4.6", s: "in", tint: "#F2EDE2", svg: "s-flour", ss: "--label:#2E7D32", img: "/products/flour-goldenpenny.svg" },
+            { n: "Gino Tomato Paste", w: "Sachet × 20", p: "₦3,600", r: "4.8", s: "in", badge: "Kitchen Staple", tint: "#F5E2DC", svg: "s-jar", ss: "--fill:#C0392B;--lid:#8A5F3B", img: "/products/gino-paste.svg" },
+            { n: "Titus Sardines", w: "Pack of 3", p: "₦2,700", r: "4.7", s: "low", tint: "#EFE5D3", svg: "s-fish", ss: "", img: "/products/titus-sardine.svg" },
+            { n: "Peak Powdered Milk", w: "400&nbsp;g tin", p: "₦4,200", r: "4.9", s: "in", badge: "Best Seller", tint: "#EAF0F4", svg: "s-jar", ss: "--fill:#EDE7DA;--lid:#2E5AAC", img: "/products/milk-peak.svg" },
+            { n: "Nestlé Golden Morn", w: "500&nbsp;g", p: "₦2,600", r: "4.7", s: "in", tint: "#F1E4C9", svg: "s-jar", ss: "--fill:#D9A441;--lid:#7B4A2D", img: "/products/goldenmorn.svg" },
+            { n: "Kellogg's Cornflakes", w: "500&nbsp;g", p: "₦3,500", r: "4.6", s: "in", tint: "#F5E3C2", svg: "s-jar", ss: "--fill:#E6B23C;--lid:#C0392B", img: "/products/cornflakes.svg" },
+            { n: "Maggi Star Seasoning", w: "100 cubes", p: "₦1,500", r: "5.0", s: "in", badge: "Kitchen Staple", tint: "#F4E3D3", svg: "s-jar", ss: "--fill:#C0392B;--lid:#F1C40F", img: "/products/maggi-cubes.svg" },
+            { n: "Milo Chocolate Drink", w: "500&nbsp;g tin", p: "₦3,800", r: "4.9", s: "in", badge: "Popular", tint: "#E7D8C4", svg: "s-jar", ss: "--fill:#5B3A1E;--lid:#2E7D32", img: "/products/milo.svg" },
+            { n: "Cadbury Bournvita", w: "500&nbsp;g", p: "₦3,400", r: "4.7", s: "in", tint: "#E7D8C4", svg: "s-jar", ss: "--fill:#5B3A1E;--lid:#C0392B", img: "/products/bournvita.svg" },
+            { n: "Dangote Sugar", w: "1&nbsp;kg", p: "₦1,600", r: "4.7", s: "in", tint: "#F3EEE6", svg: "s-jar", ss: "--fill:#FFFFFF;--lid:#2E5AAC", img: "/products/sugar-dangote.svg" }
         ];
 
         const SHOWN = 8;              // cards visible at once
@@ -382,6 +382,61 @@
                 cursor = 0;
                 render(cursor);
             } catch (e) { /* keep the fallback pool */ }
+        })();
+    }
+
+    /* ── hero announcement board (admin-controlled) ── */
+    const board = document.getElementById("announceBoard");
+    if (board) {
+        const esc2 = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) =>
+            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        let notes = [], idx = 0, aTimer = null;
+
+        const paint = () => {
+            const a = notes[idx];
+            if (!a) return;
+            board.className = "announce" + (a.theme && a.theme !== "green" ? " announce--" + a.theme : "") + (a.image_url ? " has-bg" : "");
+            const dots = notes.length > 1
+                ? `<div class="announce__dots">${notes.map((_, i) =>
+                    `<button class="announce__dot${i === idx ? " is-active" : ""}" data-i="${i}" aria-label="Announcement ${i + 1}"></button>`).join("")}</div>`
+                : "";
+            board.innerHTML =
+                (a.image_url ? `<img class="announce__bg" src="${esc2(a.image_url)}" alt="" onerror="this.style.display='none'">` : "") +
+                `<div class="announce__inner">
+                    ${a.eyebrow ? `<p class="announce__eyebrow">${esc2(a.eyebrow)}</p>` : ""}
+                    <h2 class="announce__title">${esc2(a.title)}</h2>
+                    ${a.body ? `<p class="announce__body">${esc2(a.body)}</p>` : ""}
+                    ${a.cta_label ? `<a class="announce__cta" href="${esc2(a.cta_link || "/shop")}">${esc2(a.cta_label)}
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>` : ""}
+                </div>` + dots;
+        };
+
+        const go = (i) => {
+            if (i === idx || notes.length < 2) return;
+            board.classList.add("is-swapping");
+            setTimeout(() => { idx = i; paint(); board.classList.remove("is-swapping"); }, 420);
+        };
+        const next = () => go((idx + 1) % notes.length);
+
+        board.addEventListener("click", (e) => {
+            const d = e.target.closest(".announce__dot");
+            if (d) { clearInterval(aTimer); go(Number(d.dataset.i)); aTimer = setInterval(next, 7000); }
+        });
+
+        (async () => {
+            if (!window.SB_READY || !window.sb) return;
+            try {
+                const nowIso = new Date().toISOString();
+                const { data, error } = await window.sb.from("announcements")
+                    .select("*").eq("active", true).order("sort", { ascending: true });
+                if (error || !data || !data.length) return;
+                // respect optional start/end dates
+                notes = data.filter((a) =>
+                    (!a.starts_at || a.starts_at <= nowIso) && (!a.ends_at || a.ends_at >= nowIso));
+                if (!notes.length) return;
+                idx = 0; paint();
+                if (notes.length > 1 && !prefersReducedMotion) aTimer = setInterval(next, 7000);
+            } catch (e) { /* keep the default board text */ }
         })();
     }
 

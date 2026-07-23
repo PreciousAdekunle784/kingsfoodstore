@@ -774,3 +774,9 @@ body[data-auth="in"] .page-nav__orders { display: inline-flex; }
 /* admin: product photo upload field */
 .padmin__file { font-size: .8rem; padding: 6px 4px !important; border: 1.5px dashed rgba(0,168,88,.4) !important; background: rgba(0,168,88,.04) !important; cursor: pointer; border-radius: 8px; }
 .padmin__file::file-selector-button { font-family: var(--font-body); font-weight: 600; font-size: .78rem; border: 0; background: var(--brand-green); color: #fff; padding: 5px 10px; border-radius: 6px; margin-right: 8px; cursor: pointer; }
+
+/* admin: announcement preview thumbnail */
+.ann { grid-template-columns: 210px 1fr; }
+.ann__preview { min-height: 130px !important; border-radius: 14px !important; padding: 16px !important; box-shadow: none !important; }
+.ann__preview .announce__eyebrow { font-size: .6rem; padding: 4px 10px; margin-bottom: 8px; }
+@media (max-width: 620px) { .ann { grid-template-columns: 1fr; } }
