@@ -74,6 +74,19 @@
     const loginForm = document.getElementById("loginForm");
     if (loginForm) {
         ["loginEmail", "loginPassword"].forEach(clearOnInput);
+
+        // arriving straight from sign-up: greet them and prefill their email
+        const params = new URLSearchParams(location.search);
+        if (params.get("new") === "1") {
+            let newEmail = "";
+            try { newEmail = sessionStorage.getItem("kfm_new_email") || ""; sessionStorage.removeItem("kfm_new_email"); } catch (e) {}
+            if (newEmail && loginForm.loginEmail) loginForm.loginEmail.value = newEmail;
+            showBanner(loginForm, params.get("confirm") === "1"
+                ? "Account created! Confirm your email, then sign in below."
+                : "Account created! Please sign in to continue.", false);
+            const pw = loginForm.loginPassword;
+            if (pw && newEmail) pw.focus();
+        }
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const email = loginForm.loginEmail.value.trim();
@@ -121,7 +134,7 @@
                     options: { data: { full_name: fullName, phone: phone } }
                 });
                 if (error) return { error: friendly(error.message) };
-                return { needsConfirm: !(data && data.session) };
+                return { signedUp: true, email: email, needsConfirm: !(data && data.session) };
             });
         });
         signupForm.terms.addEventListener("change", () => {
@@ -157,6 +170,24 @@
         try {
             const res = (await action()) || {};
             if (res.error) { showBanner(form, res.error, true); return; }
+
+            // account just created → send them to the sign-in page
+            if (res.signedUp) {
+                try { sessionStorage.setItem("kfm_new_email", res.email || ""); } catch (e) {}
+                // if Supabase signed them in automatically, sign out so the
+                // sign-in page is meaningful and they confirm their password
+                if (!res.needsConfirm && window.sb) {
+                    try { await window.sb.auth.signOut(); } catch (e) {}
+                }
+                showBanner(form, res.needsConfirm
+                    ? "Account created! Check your email to confirm, then sign in…"
+                    : "Account created! Taking you to sign in…", false);
+                setTimeout(() => {
+                    window.location.href = "/login?new=1" + (res.needsConfirm ? "&confirm=1" : "");
+                }, 1200);
+                return;
+            }
+
             if (res.needsConfirm) {
                 showBanner(form, "Almost there! Check your email to confirm your account, then sign in.", false);
                 form.reset();
@@ -167,7 +198,7 @@
             }
             // signed in — go to the store
             showBanner(form, "Success! Taking you to the store…", false);
-            window.location.href = "index.html";
+            window.location.href = "/";
         } catch (e) {
             showBanner(form, "Something went wrong. Please try again.", true);
         } finally {
