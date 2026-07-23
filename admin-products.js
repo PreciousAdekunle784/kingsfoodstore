@@ -24,7 +24,12 @@
     let products = [];
     let cats = [];
 
-    const catOptions = (sel) => CATEGORIES.map((c) => `<option value="${esc(c)}" ${c === sel ? "selected" : ""}>${esc(c)}</option>`).join("");
+    const catOptions = (sel) => {
+        const names = (cats && cats.length) ? cats.map((c) => c.name) : CATEGORIES;
+        // keep a product's existing category listed even if it was deleted
+        if (sel && names.indexOf(sel) === -1) names.push(sel);
+        return names.map((c) => `<option value="${esc(c)}" ${c === sel ? "selected" : ""}>${esc(c)}</option>`).join("");
+    };
     const svgOptions = (sel) => SVGS.map((s) => `<option value="${s}" ${s === sel ? "selected" : ""}>${s}</option>`).join("");
 
     // one editable form; id="" means "new product"
@@ -68,24 +73,39 @@
         </form>`;
     };
 
-    /* ── category pictures (the "Shop by Category" tiles) ── */
-    const catCard = (c) => `<div class="catadm" data-name="${esc(c.name)}">
-        <div class="catadm__media">${c.image_url ? `<img src="${esc(c.image_url)}" alt="" onerror="this.style.display='none'">` : `<span class="catadm__empty">No picture</span>`}</div>
-        <div class="catadm__info">
-            <strong>${esc(c.name)}</strong>
-            <label class="catadm__pick">
-                <input type="file" accept="image/*" class="catadm__file" data-name="${esc(c.name)}">
-                <span>${c.image_url ? "Change picture" : "Upload picture"}</span>
-            </label>
-            ${c.image_url ? `<button type="button" class="padmin__del catadm__clear" data-clear="${esc(c.name)}">Remove</button>` : ""}
-        </div>
-    </div>`;
+    /* ── categories (the "Shop by Category" tiles) — full add/edit/delete ── */
+    const TINTS = ["#F0EAD8", "#F3ECD9", "#EFE4D6", "#F5E8D2", "#F2EDE2", "#F5E2DC",
+                   "#EAF0F4", "#F4E3D3", "#E7D8C4", "#F5E3C2", "#F3EEE6", "#EDEFF1"];
+
+    const catCard = (c) => {
+        const isNew = !c.name;
+        const used = products.filter((p) => p.category === c.name).length;
+        return `<form class="catadm" data-name="${esc(c.name || "")}">
+            <div class="catadm__media">${c.image_url ? `<img src="${esc(c.image_url)}" alt="" onerror="this.style.display='none'">` : `<span class="catadm__empty">No picture</span>`}</div>
+            <div class="catadm__info">
+                <label class="catadm__lbl">Name<input name="name" value="${esc(c.name || "")}" placeholder="e.g. Baby Care" required></label>
+                <div class="catadm__row">
+                    <label class="catadm__lbl">Order<input type="number" name="sort" value="${c.sort != null ? c.sort : 0}"></label>
+                    <label class="catadm__lbl">Tint<select name="tint">${TINTS.map((t) => `<option value="${t}" ${((c.tint || "#F0EAD8").toLowerCase() === t.toLowerCase()) ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+                </div>
+                <label class="catadm__pick">
+                    <input type="file" accept="image/*" class="catadm__file" data-name="${esc(c.name || "")}">
+                    <span>${c.image_url ? "Change picture" : "Upload picture"}</span>
+                </label>
+                <div class="catadm__actions">
+                    <button type="submit" class="btn btn--primary btn--sm">${isNew ? "Add" : "Save"}</button>
+                    ${isNew ? "" : `<button type="button" class="padmin__del" data-delcat="${esc(c.name)}" data-used="${used}">Delete</button>`}
+                </div>
+                ${!isNew && used ? `<span class="catadm__used">${used} product${used === 1 ? "" : "s"}</span>` : ""}
+            </div>
+        </form>`;
+    };
 
     const render = () => {
         root.innerHTML = `
-            <h2 class="padmin__h">Category pictures</h2>
-            <p class="padmin__hint">These are the tiles in the “Shop by Category” section on your homepage.</p>
-            <div class="catadm__grid">${cats.map(catCard).join("")}</div>
+            <h2 class="padmin__h">Categories</h2>
+            <p class="padmin__hint">These are the tiles in the “Shop by Category” section on your homepage. Rename one and its products move with it.</p>
+            <div class="catadm__grid">${cats.map(catCard).join("")}${catCard({ sort: (cats.length || 0) + 1 })}</div>
             <h2 class="padmin__h">Add a new product</h2>
             <div id="newProduct">${productForm({})}</div>
             <h2 class="padmin__h">Your products (${products.length})</h2>
@@ -114,12 +134,64 @@
         };
     };
 
+    // add / save (and rename) a CATEGORY
+    root.addEventListener("submit", async (e) => {
+        const f = e.target.closest(".catadm");
+        if (!f) return;
+        e.preventDefault();
+        const oldName = f.dataset.name || "";
+        const newName = f.elements["name"].value.trim();
+        const sort = Number(f.elements["sort"].value || 0);
+        const tint = f.elements["tint"].value;
+        if (!newName) { showToast("Give the category a name."); return; }
+
+        try {
+            if (!oldName) {
+                // brand new category
+                const { error } = await window.sb.from("categories").insert({ name: newName, sort, tint });
+                if (error) { showToast(/duplicate|unique/i.test(error.message) ? "That category already exists." : "Couldn't add: " + error.message); return; }
+                showToast("Category added");
+            } else if (oldName !== newName) {
+                // rename: create the new row, move its products across, drop the old row
+                const existing = cats.find((c) => c.name === oldName) || {};
+                const { error: insErr } = await window.sb.from("categories")
+                    .insert({ name: newName, sort, tint, image_url: existing.image_url || null, svg: existing.svg || "s-sack" });
+                if (insErr) { showToast(/duplicate|unique/i.test(insErr.message) ? "A category with that name already exists." : "Couldn't rename: " + insErr.message); return; }
+                const { error: movErr } = await window.sb.from("products").update({ category: newName }).eq("category", oldName);
+                if (movErr) { showToast("Renamed, but products didn't move: " + movErr.message); }
+                await window.sb.from("categories").delete().eq("name", oldName);
+                showToast("Renamed — products moved across");
+            } else {
+                const { error } = await window.sb.from("categories").update({ sort, tint }).eq("name", oldName);
+                if (error) { showToast("Couldn't save: " + error.message); return; }
+                showToast("Saved");
+            }
+            load();
+        } catch (err) { showToast("Something went wrong. Please try again."); }
+    });
+
+    // delete a CATEGORY
+    root.addEventListener("click", async (e) => {
+        const btn = e.target.closest("[data-delcat]");
+        if (!btn) return;
+        const name = btn.dataset.delcat;
+        const used = Number(btn.dataset.used || 0);
+        const warn = used
+            ? `Delete “${name}”?\n\n${used} product${used === 1 ? " is" : "s are"} in this category — ${used === 1 ? "it" : "they"} will stay in your shop but won't belong to any category until you reassign ${used === 1 ? "it" : "them"}.`
+            : `Delete “${name}”?`;
+        if (!confirm(warn)) return;
+        const { error } = await window.sb.from("categories").delete().eq("name", name);
+        if (error) { showToast("Couldn't delete: " + error.message); return; }
+        showToast("Category deleted"); load();
+    });
+
     // upload / change a CATEGORY picture
     root.addEventListener("change", async (e) => {
         const input = e.target.closest(".catadm__file");
         if (!input || !input.files || !input.files[0]) return;
         const file = input.files[0];
-        const name = input.dataset.name;
+        const name = (input.dataset.name || "").trim();
+        if (!name) { showToast("Save the category first, then add its picture."); input.value = ""; return; }
         if (file.size > 5 * 1024 * 1024) { showToast("Image too large — use one under 5MB."); input.value = ""; return; }
         showToast("Uploading…");
         try {
@@ -135,16 +207,6 @@
             load();
         } catch (err) { showToast("Upload failed."); }
         finally { input.value = ""; }
-    });
-
-    // remove a category picture
-    root.addEventListener("click", async (e) => {
-        const btn = e.target.closest("[data-clear]");
-        if (!btn) return;
-        const { error } = await window.sb.from("categories")
-            .upsert({ name: btn.dataset.clear, image_url: null }, { onConflict: "name" });
-        if (error) { showToast("Couldn't remove: " + error.message); return; }
-        showToast("Picture removed"); load();
     });
 
     // upload a chosen photo to Supabase Storage, then fill in its URL

@@ -39,10 +39,13 @@
         titleEl.textContent = category;
         subEl.textContent = "Browse our " + category.toLowerCase() + ".";
     }
-    filters.innerHTML = [`<a class="chip ${!category ? "is-active" : ""}" href="/shop">All</a>`]
-        .concat(CATEGORIES.map((c) =>
-            `<a class="chip ${category === c ? "is-active" : ""}" href="/shop?category=${encodeURIComponent(c)}">${esc(c)}</a>`
-        )).join("");
+    const paintFilters = (names) => {
+        filters.innerHTML = [`<a class="chip ${!category ? "is-active" : ""}" href="/shop">All</a>`]
+            .concat(names.map((c) =>
+                `<a class="chip ${category === c ? "is-active" : ""}" href="/shop?category=${encodeURIComponent(c)}">${esc(c)}</a>`
+            )).join("");
+    };
+    paintFilters(CATEGORIES);   // shown immediately; refreshed from the DB below
 
     const star = `<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg>`;
 
@@ -132,6 +135,12 @@
             user = (data && data.session && data.session.user) || null;
         } catch (e) { user = null; }
         refreshCount();
+
+        // refresh the filter chips from the admin's categories
+        try {
+            const { data: cd } = await window.sb.from("categories").select("name").order("sort", { ascending: true });
+            if (cd && cd.length) paintFilters(cd.map((c) => c.name));
+        } catch (e) { /* keep the built-in chips */ }
 
         let q = window.sb.from("products").select("*").order("sort", { ascending: true });
         if (category) q = q.eq("category", category);

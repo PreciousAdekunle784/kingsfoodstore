@@ -806,3 +806,18 @@ body[data-auth="in"] .page-nav__orders { display: inline-flex; }
 }
 .catadm__pick:hover span { background: var(--forest-deep); }
 .catadm__clear { font-size: .74rem; text-align: left; padding: 0; }
+
+/* admin: editable category cards */
+.catadm__grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); align-items: start; }
+.catadm { align-items: flex-start; }
+.catadm__lbl { display: flex; flex-direction: column; gap: 3px; font-size: .7rem; font-weight: 600; color: var(--ink-soft); }
+.catadm__lbl input, .catadm__lbl select {
+    padding: 6px 8px; border: 1.5px solid rgba(26,26,26,.14); border-radius: 7px;
+    font-family: var(--font-body); font-size: .84rem; color: var(--ink); background: #fff; width: 100%;
+}
+.catadm__lbl input:focus, .catadm__lbl select:focus { outline: none; border-color: var(--brand-green); }
+.catadm__row { display: flex; gap: 8px; }
+.catadm__row .catadm__lbl { flex: 1; min-width: 0; }
+.catadm__info { flex: 1; gap: 7px; }
+.catadm__actions { display: flex; align-items: center; gap: 12px; margin-top: 2px; }
+.catadm__used { font-size: .7rem; color: var(--ink-soft); }

@@ -440,30 +440,29 @@
         })();
     }
 
-    /* ── category tiles: admin-set pictures + live product counts ── */
+    /* ── category tiles: rendered from the admin's categories ── */
     const catGrid = document.querySelector(".cat-grid");
     if (catGrid) {
         (async () => {
             if (!window.SB_READY || !window.sb) return;
-            const tiles = Array.from(catGrid.querySelectorAll(".cat-card"));
-            const nameOf = (li) => {
-                const el = li.querySelector(".cat-card__name");
-                return el ? el.textContent.trim() : "";
-            };
-            // pictures the admin set
+            const escC = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) =>
+                ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
             try {
-                const { data } = await window.sb.from("categories").select("name,image_url");
-                if (data && data.length) {
-                    const byName = {};
-                    data.forEach((c) => { byName[c.name] = c.image_url; });
-                    tiles.forEach((li) => {
-                        const url = byName[nameOf(li)];
-                        if (!url) return;
-                        const img = li.querySelector(".cat-card__photo");
-                        if (img) { img.src = url; img.classList.add("is-loaded"); img.classList.remove("is-failed"); }
-                    });
-                }
-            } catch (e) { /* keep the built-in tile pictures */ }
+                const { data, error } = await window.sb.from("categories")
+                    .select("name,image_url,tint,svg").order("sort", { ascending: true });
+                if (error || !data || !data.length) return;   // keep the built-in tiles
+                catGrid.innerHTML = data.map((c) => {
+                    const img = c.image_url
+                        ? `<img class="photo cat-card__photo is-loaded" src="${escC(c.image_url)}" alt="${escC(c.name)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`
+                        : "";
+                    return `<li class="cat-card reveal is-visible" style="--tint:${escC(c.tint || "#F0EAD8")}">
+                        <a href="/shop?category=${encodeURIComponent(c.name)}">
+                            <span class="cat-card__art" aria-hidden="true">${img}<svg viewBox="0 0 120 120"><use href="#${escC(c.svg || "s-sack")}"/></svg></span>
+                            <span class="cat-card__body"><span class="cat-card__name">${escC(c.name)}</span></span>
+                            <span class="cat-card__arrow" aria-hidden="true">→</span>
+                        </a></li>`;
+                }).join("");
+            } catch (e) { /* keep the built-in tiles */ }
         })();
     }
 
