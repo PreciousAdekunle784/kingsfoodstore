@@ -464,20 +464,6 @@
                     });
                 }
             } catch (e) { /* keep the built-in tile pictures */ }
-            // live product counts
-            try {
-                const { data } = await window.sb.from("products").select("category");
-                if (data) {
-                    const counts = {};
-                    data.forEach((p) => { if (p.category) counts[p.category] = (counts[p.category] || 0) + 1; });
-                    tiles.forEach((li) => {
-                        const el = li.querySelector(".cat-card__count");
-                        if (!el) return;
-                        const n = counts[nameOf(li)] || 0;
-                        el.textContent = n === 1 ? "1 product" : n + " products";
-                    });
-                }
-            } catch (e) { /* leave the printed counts */ }
         })();
     }
 
